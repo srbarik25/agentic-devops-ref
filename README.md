@@ -39,6 +39,7 @@ Key benefits include:
 ## Table of Contents
 
 - [Features & Core Capabilities](#features--core-capabilities)
+- [UI Components](#ui-components)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Documentation](#documentation)
@@ -101,6 +102,54 @@ The platform continuously monitors and enhances your security posture by:
 - Enforcing security best practices across your infrastructure
 - Identifying unusual access patterns that may indicate security threats
 - Automatically rotating credentials and secrets
+
+## UI Components
+
+Agentic DevOps includes a modern, retro-inspired terminal interface that provides intuitive access to all platform capabilities. The UI is designed to be both functional and visually engaging, with a focus on providing clear information and efficient workflows.
+
+### Core UI Components
+
+| Component | Description |
+|-----------|-------------|
+| **CommandPrompt** | Interactive terminal interface for executing DevOps commands with syntax highlighting, command history, and auto-completion. Supports AWS, GitHub, and deployment operations through a unified command language. |
+| **NavigationMenu** | Provides quick access to different sections of the application including AWS resources, GitHub repositories, and deployment tools. Features intuitive icons and responsive design for both desktop and mobile use. |
+| **InstanceList** | Displays EC2 instances with key information including ID, state, type, and availability zone. Supports filtering, sorting, and direct instance management actions. |
+| **RepositoryList** | Shows GitHub repositories with owner, name, and description. Enables quick access to repository details and branch information for deployment operations. |
+| **NotificationPanel** | Real-time updates on infrastructure events, deployment status, and system alerts. Categorized by type (email, calendar, system) for easy monitoring of DevOps operations. |
+| **DevOpsContext** | State management system that maintains the current operational context across the application, ensuring consistent data access for all components. |
+
+### UI Features
+
+- **Retro Terminal Aesthetic**: Nostalgic green-on-black terminal interface with modern functionality
+- **Responsive Design**: Fully functional on both desktop and mobile devices
+- **Command-Line Interface**: Natural language and structured commands for infrastructure management
+- **Real-Time Updates**: Live notifications of infrastructure changes and deployment status
+- **Scrollable Menus**: Access to extensive DevOps tools and services through scrollable system menus
+- **Interactive Elements**: Clickable components for quick access to detailed information
+- **Accessibility**: Keyboard navigation and screen reader support for inclusive usage
+- **Dark Mode**: Eye-friendly interface designed for extended use in low-light environments
+
+### UI Integration
+
+The UI seamlessly integrates with the backend services through a well-defined API layer:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     UI Components                           │
+├───────────┬───────────┬────────────┬────────────┬──────────┤
+│ Command   │ Navigation│ Resource   │ Deployment │ Notifi-  │
+│ Prompt    │ Menu      │ Viewers    │ Tools      │ cations  │
+└─────┬─────┴─────┬─────┴──────┬─────┴──────┬─────┴─────┬────┘
+      │           │            │            │           │
+┌─────▼───────────▼────────────▼────────────▼───────────▼────┐
+│                     DevOps Context & State                  │
+└─────┬───────────────┬────────────────┬──────────────────────┘
+      │               │                │
+┌─────▼───────┐ ┌─────▼───────┐ ┌─────▼───────┐
+│ AWS Service │ │ GitHub      │ │ Deployment  │
+│ Layer       │ │ Service     │ │ Service     │
+└─────────────┘ └─────────────┘ └─────────────┘
+```
 
 ## Installation
 
@@ -224,6 +273,17 @@ async def main():
 if __name__ == "__main__":
     asyncio.run(main())
 ```
+
+### UI Usage
+
+```bash
+# Start the UI development server
+cd ui
+npm install
+npm run dev
+```
+
+Access the UI at http://localhost:5173 to interact with the Agentic DevOps terminal interface.
 
 ## Documentation
 

@@ -244,7 +244,8 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({ isOpen, onClose }) => {
         {showMenu && (
           <div className="mt-2 mb-2 border border-[#33FF00]/30 p-2">
             <div className="text-center mb-2 border-b border-[#33FF00]/30 pb-1">DEVOPS SYSTEM MENU</div>
-            <ScrollArea className="h-[150px] pr-4">
+            {/* Fixed height container with overflow auto */}
+            <div className="h-[150px] overflow-y-auto pr-1">
               <div className="grid grid-cols-1 gap-1">
                 {MENU_ITEMS.map((item) => (
                   <button
@@ -257,7 +258,7 @@ const CommandPrompt: React.FC<CommandPromptProps> = ({ isOpen, onClose }) => {
                   </button>
                 ))}
               </div>
-            </ScrollArea>
+            </div>
           </div>
         )}
       </div>
