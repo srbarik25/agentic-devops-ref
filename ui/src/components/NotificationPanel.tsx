@@ -28,51 +28,49 @@ const NotificationPanel: React.FC = () => {
   const getContentForNotification = (title: string, type: string): string => {
     switch (type) {
       case 'email':
-        if (title.includes('LOVE YOUR WORK')) {
-          return "Hello, I've been following your work and I'm impressed with your latest project. Would you be interested in collaborating on a new AI-driven interface? Let me know your thoughts. Best regards, Valerie";
-        } else if (title.includes('SYSTEM DATA ANALYSIS')) {
-          return "System data analysis complete. No anomalies detected in main processor. Memory optimization recommended for sectors 4A through 7C. Backup completed successfully.";
-        } else if (title.includes('EY.AI DEPLOYMENT')) {
-          return "Congratulations on the successful deployment of EY.ai! Your pivotal role in this enterprise AI stack implementation has been noted. The system is now serving 400,000+ employees and 1.5M end users with the allocated $1.4B budget performing as expected. Outstanding work, rUv.";
-        } else if (title.includes('CLOUD COMPUTING PIONEER')) {
-          return "Your recent talk on the evolution of cloud computing was enlightening. As the person who coined 'infrastructure as a service' in 2005 before AWS EC2 launched, your insights are invaluable. The Enomaly Inc. case study continues to inspire new cloud ventures.";
-        } else if (title.includes('INTERVIEW REQUEST')) {
-          return "I'm reaching out from Tech Visionaries Magazine. We're doing a feature on AI pioneers and would love to interview you about your three decades in the industry, from early internet days with Napster and AOL to your current work with enterprise AI systems. Your experience as an alpha/beta tester for OpenAI is particularly interesting to our readers.";
-        } else if (title.includes('AGENTICS FOUNDATION')) {
-          return "⭐ Introducing the Agentics Foundation, a vibrant community and the literal foundation for innovation and collaboration in the field of agent-based AI systems.\n\nBy bringing together forward-thinking individuals and organizations, we empower members to design, deploy, and manage autonomous agents that enhance human potential through intuitive, accessible interfaces.\n\nQuick Links:\n- 🚀 Agentics Foundation: https://agentics.org\n- 👩‍🏫 Membership: https://lnkd.in/gTk3QEGH\n- 🦄 Dashboard: https://lnkd.in/ggc7-bJk\n- 🐙 Github: https://lnkd.in/gk8y2ZdZ\n\nOur Vision:\nAt Agentics, we envision a future where artificial intelligence seamlessly integrates into daily life as a natural extension of human capability. We strive to create flexible technologies that adapt effortlessly to human needs, enabling individuals and communities to achieve greater outcomes without compromising their natural workflows.\n\nJoin the movement and help shape the future of AI!";
+        if (title.includes('AWS EC2 COST OPTIMIZATION')) {
+          return "Hello DevOps Team,\n\nOur automated cost analysis has identified potential savings of 23% on your AWS EC2 instances. Several instances are running at less than 10% utilization and could be downsized or converted to spot instances.\n\nRecommended actions:\n- Downsize 5 m5.xlarge instances to m5.large\n- Convert 3 development instances to spot instances\n- Schedule automatic shutdown for non-production instances outside business hours\n\nEstimated monthly savings: $1,245.00\n\nPlease review the attached detailed report and let me know if you'd like to proceed with these optimizations.\n\nBest regards,\nAgentic DevOps Cost Optimization Service";
+        } else if (title.includes('GITHUB SECURITY ALERT')) {
+          return "SECURITY ALERT: Critical vulnerability detected in your GitHub repository 'agentic-devops'.\n\nVulnerability details:\n- CVE-2023-45127: Remote code execution vulnerability in dependency 'log4j-core'\n- Severity: Critical (CVSS 9.8)\n- Affected version: 2.14.1\n- Recommended version: 2.17.1 or later\n\nThis vulnerability could allow attackers to execute arbitrary code on your systems. Please update this dependency immediately.\n\nAgentic DevOps Security Monitoring Service";
+        } else if (title.includes('DEPLOYMENT PIPELINE')) {
+          return "The Agentic DevOps deployment pipeline has been successfully configured for your project. Your code will now automatically flow through the following stages:\n\n1. Code Commit → GitHub Repository\n2. Build → AWS CodeBuild\n3. Test → Automated Test Suite\n4. Deploy → AWS EC2 Instances\n5. Monitor → CloudWatch Metrics\n\nAll stages include automated notifications and approval gates where specified. The first deployment is scheduled for tomorrow at 10:00 UTC.\n\nAgentic DevOps CI/CD Service";
+        } else if (title.includes('INFRASTRUCTURE AUDIT')) {
+          return "Infrastructure Audit Complete\n\nOur automated audit of your cloud infrastructure has been completed. Key findings:\n\n✅ 87% of resources properly tagged\n❌ 12 security groups with overly permissive rules\n⚠️ 3 S3 buckets without encryption\n✅ All RDS instances have backups enabled\n❌ 4 IAM users with unused access keys (>90 days)\n\nA detailed report with remediation steps has been attached. Would you like us to schedule automatic remediation of these issues?\n\nAgentic DevOps Compliance Team";
+        } else if (title.includes('DISASTER RECOVERY')) {
+          return "Disaster Recovery Plan Update\n\nYour disaster recovery plan has been updated and tested successfully. Current recovery metrics:\n\n- Recovery Time Objective (RTO): 45 minutes\n- Recovery Point Objective (RPO): 15 minutes\n- Estimated recovery cost: $850 per incident\n\nThe automated recovery procedure successfully restored all critical services during our simulated outage test. Backup verification is now performed daily with results logged to your secure dashboard.\n\nAgentic DevOps Resilience Team";
         }
         return "No additional information available for this email.";
       
       case 'calendar':
-        if (title.includes('TEAM WEEKLY')) {
-          return "Agenda: \n- Project status update \n- New feature discussion \n- Resource allocation \n- Q&A \n\nPlease prepare your weekly progress report.";
-        } else if (title.includes('QUARTERLY PLANNING')) {
-          return "Quarterly planning for upcoming system enhancements. All department heads must attend. Bring documentation on resource requirements for next fiscal period.";
-        } else if (title.includes('VIBE CODING SESSION')) {
-          return "Upcoming vibe coding session with rUv scheduled. Duration: 30 minutes. Topics to cover: aesthetic code optimization, agent alignment protocols, and intuitive design principles for your current project.";
-        } else if (title.includes('FUNGIBILITY PODCAST')) {
-          return "Recording session for the Fungibility Podcast. Episode topic: 'The Evolution of AI Agents in Enterprise Settings.' Guest: Dr. Ada Chen from MIT Media Lab. Pre-recording briefing starts 15 minutes before the scheduled time.";
-        } else if (title.includes('US FEDERAL CIO COUNCIL')) {
-          return "Advisory meeting with the US Federal CIO Council on AI implementation strategies for government systems. Your presentation on secure agent deployment is scheduled for 25 minutes, followed by a 15-minute Q&A session.";
+        if (title.includes('AWS ARCHITECTURE REVIEW')) {
+          return "AWS Architecture Review Meeting\n\nAgenda:\n- Review current AWS infrastructure architecture\n- Identify optimization opportunities\n- Discuss high availability improvements\n- Plan migration to container-based services\n- Security posture assessment\n\nPlease prepare your current architecture diagrams and performance metrics. The Agentic DevOps architect will provide recommendations based on AWS best practices and your specific workload patterns.";
+        } else if (title.includes('GITHUB WORKFLOW')) {
+          return "GitHub Workflow Optimization Workshop\n\nIn this hands-on session, we'll optimize your GitHub Actions workflows to improve CI/CD performance. Topics include:\n\n- Parallel job execution strategies\n- Efficient matrix builds\n- Caching dependencies\n- Self-hosted runners vs. GitHub-hosted runners\n- Workflow security best practices\n\nPlease have administrator access to your GitHub repositories during this session.";
+        } else if (title.includes('KUBERNETES CLUSTER')) {
+          return "Kubernetes Cluster Upgrade Planning\n\nThis meeting will focus on planning the upgrade of your Kubernetes clusters from version 1.24 to 1.27. We'll cover:\n\n- Pre-upgrade assessment\n- Compatibility testing strategy\n- Upgrade sequence and timeline\n- Rollback procedures\n- Post-upgrade validation\n\nThe Agentic DevOps Kubernetes specialist will guide you through the process to ensure minimal disruption to your services.";
+        } else if (title.includes('TERRAFORM MODULE')) {
+          return "Terraform Module Development Session\n\nThis collaborative session will focus on creating reusable Terraform modules for your infrastructure. Agenda:\n\n- Module structure best practices\n- Input/output variable design\n- Version control and tagging strategy\n- Testing framework setup\n- Documentation standards\n\nPlease have your current Terraform configurations available for reference.";
+        } else if (title.includes('SECURITY COMPLIANCE')) {
+          return "Security Compliance Review\n\nQuarterly review of security compliance across your DevOps pipeline. We'll assess:\n\n- Secrets management practices\n- Infrastructure-as-Code security scanning\n- Container image vulnerability management\n- Compliance with regulatory requirements (SOC2, HIPAA, etc.)\n- Incident response procedures\n\nThe Agentic DevOps Security team will provide a compliance scorecard and remediation recommendations.";
         }
         return "No additional information available for this calendar event.";
       
       case 'system':
-        if (title.includes('GITHUB INSTALLATION GUIDE')) {
-          return "VIBING TERMINAL INTERFACE - INSTALLATION PROTOCOL\n\n:: SYSTEM REQUIREMENTS ::\n* NODE.JS 18+ ENVIRONMENT\n* NPM OR BUN PACKAGE MANAGER\n* 64K MEMORY ALLOCATION\n\n:: INSTALLATION SEQUENCE ::\n\n1. CLONE REPOSITORY\n   git clone https://github.com/ruvnet/vibing.git\n\n2. NAVIGATE TO DIRECTORY\n   cd vibing\n\n3. INSTALL DEPENDENCIES\n   npm i\n\n4. INITIATE DEVELOPMENT SERVER\n   npm run dev\n\n:: DEPLOYMENT OPTIONS ::\n\n* FLY.IO DEPLOYMENT:\n  curl -L https://fly.io/install.sh | sh\n  fly auth login\n  fly deploy\n\n* VERCEL COMPATIBLE\n* NETLIFY COMPATIBLE\n\n:: ACCESS PROTOCOLS ::\n\nAfter initialization, system will be available at:\nhttp://localhost:5173\n\nDeployed URL: https://vibing.fly.dev/\nRepository: https://github.com/ruvnet/vibing\n\n:: END OF TRANSMISSION ::";
-        } else if (title.includes('UPDATE FIRMWARE')) {
-          return "Critical update available. This update includes important security patches and performance improvements. Estimated installation time: 5 minutes. System will need to restart.";
-        } else if (title.includes('MEMORY USAGE')) {
-          return "Memory usage exceeding optimal levels. Recommended actions: \n- Close unused applications \n- Clear temporary cache \n- Run diagnostic scan";
-        } else if (title.includes('NIST CLOUD DEFINITION')) {
-          return "Historical document retrieved: Co-authored US Cloud Definition with the National Institute of Standards and Technology (009). This document provided the foundation for cloud policy and implementation across federal agencies. Reference ID: NIST-SP-800-145.";
-        } else if (title.includes('CLOUDCAMP ANALYTICS')) {
-          return "CloudCamp initiative statistics update: Now active in 278 cities globally. Total participants to date: 103,450. Impact assessment shows 72% of participants implemented cloud technologies within 6 months of attendance. Co-founding this grassroots movement in 2008 continues to yield exponential returns.";
+        if (title.includes('EC2 AUTO-SCALING')) {
+          return "EC2 Auto-Scaling Event Detected\n\nTimestamp: 2025-03-21T16:42:18Z\nRegion: us-east-1\nAuto-Scaling Group: agentic-devops-production\nEvent: Scale-out\nDetails: Increased capacity from 5 to 8 instances\nTrigger: CPU utilization exceeded 75% threshold for 5 minutes\n\nNew instances:\n- i-0abc12345def67890 (us-east-1a)\n- i-0bcd23456efg78901 (us-east-1b)\n- i-0cde34567fgh89012 (us-east-1c)\n\nAll instances passed health checks and are now serving traffic.";
+        } else if (title.includes('GITHUB ACTIONS')) {
+          return "GitHub Actions Workflow Completed\n\nRepository: agentic-devops/infrastructure\nWorkflow: Deploy to Production\nCommit: 7a8b9c0d1e2f3g4h5i6j7k8l9m0n1o2p3q4r\nAuthor: DevOps Engineer\nStatus: ✅ Success\nDuration: 4m 32s\n\nStages:\n- Lint: Passed (0 errors, 2 warnings)\n- Test: Passed (142 tests, 100% coverage)\n- Build: Passed (artifacts: deployment-package.zip)\n- Deploy: Passed (target: production)\n\nDeployment URL: https://agentic-devops-prod.example.com";
+        } else if (title.includes('S3 BUCKET')) {
+          return "S3 Bucket Policy Change Detected\n\nBucket: agentic-devops-artifacts\nChange Type: Policy Modification\nUser: arn:aws:iam::123456789012:user/admin\nTimestamp: 2025-03-21T15:37:42Z\n\nChanges:\n- Added public access block\n- Removed cross-account access for account 987654321098\n- Added encryption requirement for all objects\n\nThis change has been logged and added to the compliance audit trail. If this change was not authorized, please contact the security team immediately.";
+        } else if (title.includes('CLOUDWATCH ALARM')) {
+          return "CloudWatch Alarm: High Error Rate\n\nAlarm Name: API-Gateway-5XX-Errors\nState: ALARM\nReason: Threshold Exceeded\nMetric: 5XXError\nNamespace: AWS/ApiGateway\nDimensions: ApiName=agentic-devops-api\nPeriod: 60 seconds\nThreshold: > 5 errors per minute\nCurrent Value: 12 errors per minute\n\nThe Agentic DevOps incident response system has automatically created a ticket and notified the on-call engineer. Initial diagnostics suggest a database connection issue.";
+        } else if (title.includes('TERRAFORM PLAN')) {
+          return "Terraform Plan Summary\n\nDirectory: /infrastructure/production\nCommand: terraform plan\nTimestamp: 2025-03-21T14:22:15Z\n\nChanges:\n+ Create: 3 resources\n~ Modify: 5 resources\n- Destroy: 1 resource\n\nSignificant changes:\n+ aws_lambda_function.data_processor (new function)\n~ aws_ecs_service.api (update instance count from 2 to 3)\n~ aws_security_group.database (add new ingress rule)\n- aws_s3_bucket.temp_storage (will be destroyed)\n\nEstimated additional monthly cost: $45.20\nApproval required before applying these changes.";
         }
         return "No additional information available for this system notification.";
       
       case 'ruvservices':
-        return "AGENTIC ENGINEER SERVICES OVERVIEW:\n\n* VIBE CODING SESSIONS - $99/15MIN\n* CONSULTING PACKAGES - CUSTOM RATES\n* AGENT ALIGNMENT - STARTING $499\n* SYSTEM ARCHITECTURE - STARTING $999\n\nContact: ruv@ruv.net";
+        return "AGENTIC DEVOPS SERVICES OVERVIEW:\n\n* AWS ARCHITECTURE REVIEW - $499\n* GITHUB WORKFLOW OPTIMIZATION - $299\n* KUBERNETES CLUSTER MANAGEMENT - $699\n* TERRAFORM MODULE DEVELOPMENT - $399\n* SECURITY COMPLIANCE ASSESSMENT - $599\n\nContact: devops@agentic.example.com";
       
       default:
         return "No additional information available.";
@@ -129,61 +127,52 @@ const NotificationPanel: React.FC = () => {
           </div>
           
           <ScrollArea className="flex-1 pr-2 max-h-full touch-auto overflow-y-auto">
-            <div className="font-micro text-[#33FF00]/90 text-xs md:text-sm whitespace-pre-line">
+            <div className="font-micro text-[#33FF00]/90 text-sm md:text-base whitespace-pre-line">
               {selectedNotification.content}
             </div>
           </ScrollArea>
         </div>
       ) : (
         <ScrollArea className="pr-4 flex-1 min-h-0 touch-auto overflow-y-auto">
-          {/* rUv Section - Moved to top and added new message */}
+          {/* Agentic DevOps Section */}
           <div className="mb-4 md:mb-6">
             <div className="flex items-center mb-2 md:mb-3">
               <User className="h-3 w-3 text-[#33FF00]/70 mr-2" />
               <h3 className="text-[#33FF00]/70 font-micro uppercase tracking-wider text-xs md:text-sm">
-                AGENTIC ENGINEER
+                AGENTIC DEVOPS
               </h3>
             </div>
             
-            {/* New message - VIBE CODING SESSIONS with RUV NOW AVAILABLE */}
             <NotificationCard 
               type="ruvservices"
-              title="VIBE CODING SESSIONS with RUV NOW AVAILABLE"
-              subtitle="STARTING AT $99 FOR 15 MIN"
+              title="DEVOPS AUTOMATION SERVICES"
+              subtitle="INFRASTRUCTURE AS CODE SPECIALISTS"
               className="fade-in-delay-1 border-l-[#FF33CC] animate-pulse-slow"
-              onClick={() => handleCardClick("VIBE CODING SESSIONS with RUV NOW AVAILABLE", "ruvservices")}
+              onClick={() => handleCardClick("DEVOPS AUTOMATION SERVICES", "ruvservices")}
             />
             
             <NotificationCard 
               type="calendar"
-              title="VIBE CODING SESSION WITH rUv"
+              title="AWS ARCHITECTURE REVIEW"
               subtitle="TOMORROW • 14:30 HRS"
               className="fade-in-delay-1 border-l-[#FF33CC]"
-              onClick={() => handleCardClick("VIBE CODING SESSION WITH rUv", "calendar")}
+              onClick={() => handleCardClick("AWS ARCHITECTURE REVIEW", "calendar")}
             />
             
             <NotificationCard
               type="email"
-              title="AGENTICS FOUNDATION LAUNCH"
-              subtitle="COMMUNITY ANNOUNCEMENT"
+              title="DEPLOYMENT PIPELINE CONFIGURED"
+              subtitle="CI/CD AUTOMATION COMPLETE"
               className="fade-in-delay-1 border-l-[#FF33CC]"
-              onClick={() => handleCardClick("AGENTICS FOUNDATION LAUNCH", "email")}
+              onClick={() => handleCardClick("DEPLOYMENT PIPELINE CONFIGURED", "email")}
             />
             
             <NotificationCard
               type="system"
-              title="GITHUB INSTALLATION GUIDE"
-              subtitle="VIBING TERMINAL INTERFACE"
+              title="GITHUB ACTIONS WORKFLOW COMPLETED"
+              subtitle="DEPLOY TO PRODUCTION: SUCCESS"
               className="fade-in-delay-1 border-l-[#FF33CC] animate-pulse-slow"
-              onClick={() => handleCardClick("GITHUB INSTALLATION GUIDE", "system")}
-            />
-            
-            <NotificationCard
-              type="ruvservices"
-              title="rUv CODING SERVICES NOW AVAILABLE"
-              subtitle="STARTING AT $99 FOR 15 MIN"
-              className="fade-in-delay-1 border-l-[#FF33CC]"
-              onClick={() => handleCardClick("rUv CODING SERVICES NOW AVAILABLE", "ruvservices")}
+              onClick={() => handleCardClick("GITHUB ACTIONS WORKFLOW COMPLETED", "system")}
             />
           </div>
           
@@ -197,38 +186,31 @@ const NotificationPanel: React.FC = () => {
             </div>
             <NotificationCard 
               type="email"
-              title="CLOUD COMPUTING PIONEER RECOGNITION"
-              subtitle="TECH HERITAGE FOUNDATION"
+              title="AWS EC2 COST OPTIMIZATION REPORT"
+              subtitle="POTENTIAL SAVINGS: 23%"
               className="fade-in-delay-1 border-l-[#FF33CC]"
-              onClick={() => handleCardClick("CLOUD COMPUTING PIONEER RECOGNITION", "email")}
+              onClick={() => handleCardClick("AWS EC2 COST OPTIMIZATION REPORT", "email")}
             />
             <NotificationCard 
               type="email"
-              title="INTERVIEW REQUEST: TECH VISIONARIES"
-              subtitle="MEDIA INQUIRY"
+              title="GITHUB SECURITY ALERT: CRITICAL"
+              subtitle="ACTION REQUIRED"
               className="fade-in-delay-1 border-l-[#FF33CC]"
-              onClick={() => handleCardClick("INTERVIEW REQUEST: TECH VISIONARIES", "email")}
+              onClick={() => handleCardClick("GITHUB SECURITY ALERT: CRITICAL", "email")}
             />
             <NotificationCard 
               type="email"
-              title="LOVE YOUR WORK + NEW PROJECT REQUEST"
-              subtitle="VALERIE TETU"
+              title="INFRASTRUCTURE AUDIT RESULTS"
+              subtitle="87% COMPLIANCE SCORE"
               className="fade-in-delay-1"
-              onClick={() => handleCardClick("LOVE YOUR WORK + NEW PROJECT REQUEST", "email")}
+              onClick={() => handleCardClick("INFRASTRUCTURE AUDIT RESULTS", "email")}
             />
             <NotificationCard 
               type="email"
-              title="SYSTEM DATA ANALYSIS COMPLETED"
-              subtitle="CENTRAL AI"
+              title="DISASTER RECOVERY PLAN UPDATED"
+              subtitle="RTO: 45 MINUTES"
               className="fade-in-delay-1"
-              onClick={() => handleCardClick("SYSTEM DATA ANALYSIS COMPLETED", "email")}
-            />
-            <NotificationCard 
-              type="email"
-              title="EY.AI DEPLOYMENT SUCCESS"
-              subtitle="ENTERPRISE SYSTEMS"
-              className="fade-in-delay-1 border-l-[#FF33CC]"
-              onClick={() => handleCardClick("EY.AI DEPLOYMENT SUCCESS", "email")}
+              onClick={() => handleCardClick("DISASTER RECOVERY PLAN UPDATED", "email")}
             />
           </div>
           
@@ -242,31 +224,31 @@ const NotificationPanel: React.FC = () => {
             </div>
             <NotificationCard 
               type="calendar"
-              title="FUNGIBILITY PODCAST RECORDING"
-              subtitle="STUDIO B • 15:00 HRS"
+              title="GITHUB WORKFLOW OPTIMIZATION"
+              subtitle="VIRTUAL • 15:00 HRS"
               className="fade-in-delay-2 border-l-[#FF33CC]"
-              onClick={() => handleCardClick("FUNGIBILITY PODCAST RECORDING", "calendar")}
+              onClick={() => handleCardClick("GITHUB WORKFLOW OPTIMIZATION", "calendar")}
             />
             <NotificationCard 
               type="calendar"
-              title="US FEDERAL CIO COUNCIL ADVISORY"
-              subtitle="VIRTUAL • 09:00 HRS"
+              title="KUBERNETES CLUSTER UPGRADE"
+              subtitle="PLANNING MEETING • 09:00 HRS"
               className="fade-in-delay-2 border-l-[#FF33CC]"
-              onClick={() => handleCardClick("US FEDERAL CIO COUNCIL ADVISORY", "calendar")}
+              onClick={() => handleCardClick("KUBERNETES CLUSTER UPGRADE", "calendar")}
             />
             <NotificationCard 
               type="calendar"
-              title="TEAM WEEKLY SYNC"
-              subtitle="ZOOM • 10:05 AM"
+              title="TERRAFORM MODULE DEVELOPMENT"
+              subtitle="PAIR PROGRAMMING • 11:00 HRS"
               className="fade-in-delay-2"
-              onClick={() => handleCardClick("TEAM WEEKLY SYNC", "calendar")}
+              onClick={() => handleCardClick("TERRAFORM MODULE DEVELOPMENT", "calendar")}
             />
             <NotificationCard 
               type="calendar"
-              title="QUARTERLY PLANNING MEETING"
-              subtitle="CONFERENCE ROOM • 02:30 PM"
+              title="SECURITY COMPLIANCE REVIEW"
+              subtitle="QUARTERLY MEETING • 14:00 HRS"
               className="fade-in-delay-2"
-              onClick={() => handleCardClick("QUARTERLY PLANNING MEETING", "calendar")}
+              onClick={() => handleCardClick("SECURITY COMPLIANCE REVIEW", "calendar")}
             />
           </div>
           
@@ -280,31 +262,31 @@ const NotificationPanel: React.FC = () => {
             </div>
             <NotificationCard 
               type="system"
-              title="NIST CLOUD DEFINITION ARCHIVE"
-              subtitle="HISTORICAL DOCUMENT"
+              title="EC2 AUTO-SCALING EVENT"
+              subtitle="SCALED OUT: 5 → 8 INSTANCES"
               className="fade-in-delay-3 border-l-[#FF33CC]"
-              onClick={() => handleCardClick("NIST CLOUD DEFINITION ARCHIVE", "system")}
+              onClick={() => handleCardClick("EC2 AUTO-SCALING EVENT", "system")}
             />
             <NotificationCard 
               type="system"
-              title="CLOUDCAMP ANALYTICS UPDATE"
-              subtitle="GLOBAL INITIATIVE STATS"
+              title="S3 BUCKET POLICY CHANGED"
+              subtitle="SECURITY ENHANCEMENT"
               className="fade-in-delay-3 border-l-[#FF33CC]"
-              onClick={() => handleCardClick("CLOUDCAMP ANALYTICS UPDATE", "system")}
+              onClick={() => handleCardClick("S3 BUCKET POLICY CHANGED", "system")}
             />
             <NotificationCard 
               type="system"
-              title="UPDATE FIRMWARE V 1.0.3"
-              subtitle="OPEN APP"
+              title="CLOUDWATCH ALARM: HIGH ERROR RATE"
+              subtitle="API GATEWAY: 5XX ERRORS"
               className="fade-in-delay-3"
-              onClick={() => handleCardClick("UPDATE FIRMWARE V 1.0.3", "system")}
+              onClick={() => handleCardClick("CLOUDWATCH ALARM: HIGH ERROR RATE", "system")}
             />
             <NotificationCard 
               type="system"
-              title="MEMORY USAGE: 72%"
-              subtitle="OPTIMIZE RECOMMENDED"
+              title="TERRAFORM PLAN READY FOR REVIEW"
+              subtitle="9 RESOURCE CHANGES"
               className="fade-in-delay-3"
-              onClick={() => handleCardClick("MEMORY USAGE: 72%", "system")}
+              onClick={() => handleCardClick("TERRAFORM PLAN READY FOR REVIEW", "system")}
             />
           </div>
         </ScrollArea>
@@ -312,7 +294,7 @@ const NotificationPanel: React.FC = () => {
       
       {/* Console Footer */}
       <div className="mt-4 border-t border-[#33FF00]/30 pt-2 text-[10px] font-micro text-[#33FF00]/70 flex justify-between">
-        <span>{showRuvServices ? "rUv SERVICES" : selectedNotification ? "VIEWING" : "READY"}</span>
+        <span>{showRuvServices ? "DEVOPS SERVICES" : selectedNotification ? "VIEWING" : "READY"}</span>
         <span className="blink-text">{">"}</span>
         <span>v1.0.3</span>
       </div>

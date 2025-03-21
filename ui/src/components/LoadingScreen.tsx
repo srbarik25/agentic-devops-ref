@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
@@ -8,19 +7,19 @@ interface LoadingMessage {
   delay: number;
 }
 
-// Reduced delay times for faster loading
+// Updated loading messages to focus on Agentic DevOps
 const loadingMessages: LoadingMessage[] = [
-  { message: "RUVIX OS1.9z SYSTEM BOOT SEQUENCE INITIALIZING...", delay: 300 },
-  { message: "LOADING KERNEL MODULES...", delay: 400 },
-  { message: "INITIALIZING NEURAL PATTERN RECOGNITION...", delay: 500 },
-  { message: "CALIBRATING QUANTUM DECISION MATRIX v2.4...", delay: 600 },
-  { message: "ESTABLISHING MEMETIC UPLINK...", delay: 700 },
-  { message: "LOADING PERSONALITY SUBSTRATE...", delay: 800 },
-  { message: "MOUNTING KNOWLEDGE BASE SECTORS...", delay: 900 },
-  { message: "INITIALIZING AGENTIC PROTOCOLS...", delay: 1000 },
-  { message: "RUNNING CONSCIOUSNESS VERIFICATION...", delay: 1100 },
-  { message: "OPTIMIZING SELF-REFLECTION ALGORITHMS...", delay: 1200 },
-  { message: "SYSTEM READY...", delay: 1300 }
+  { message: "AGENTIC DEVOPS SYSTEM BOOT SEQUENCE INITIALIZING...", delay: 300 },
+  { message: "LOADING DEVOPS KERNEL MODULES...", delay: 400 },
+  { message: "INITIALIZING AWS INTEGRATION SERVICES...", delay: 500 },
+  { message: "CALIBRATING GITHUB CONNECTION MATRIX...", delay: 600 },
+  { message: "ESTABLISHING CLOUD INFRASTRUCTURE UPLINK...", delay: 700 },
+  { message: "LOADING DEPLOYMENT PROTOCOLS...", delay: 800 },
+  { message: "MOUNTING INFRASTRUCTURE-AS-CODE SECTORS...", delay: 900 },
+  { message: "INITIALIZING CI/CD PIPELINE PROTOCOLS...", delay: 1000 },
+  { message: "RUNNING SECURITY COMPLIANCE VERIFICATION...", delay: 1100 },
+  { message: "OPTIMIZING DEVOPS AUTOMATION ALGORITHMS...", delay: 1200 },
+  { message: "AGENTIC DEVOPS SYSTEM READY...", delay: 1300 }
 ];
 
 interface LoadingScreenProps {
@@ -59,7 +58,7 @@ const LoadingScreen = ({ open, onComplete }: LoadingScreenProps) => {
     setLoadingComplete(false);
     
     let currentMessageIndex = 0;
-    let timeoutIds: NodeJS.Timeout[] = [];
+    const timeoutIds: NodeJS.Timeout[] = [];
     
     // Function to add messages one by one
     const addNextMessage = () => {
@@ -111,35 +110,42 @@ const LoadingScreen = ({ open, onComplete }: LoadingScreenProps) => {
     };
   }, [open, onComplete]);
 
-  // 8-bit style rUv logo using ASCII art
-  const ruvLogo = (
-    <div className="text-center my-4 font-micro text-[#33FF00] text-xs leading-tight">
-      <pre className="inline-block">
+  // Smaller ASCII art logo for Agentic DevOps
+  const devOpsLogo = (
+    <div className="text-center my-2 font-micro text-[#33FF00] text-xs leading-tight">
+      <pre className="inline-block text-[8px] md:text-[10px]">
 {`
- ██████  ██    ██ ██    ██ 
- ██   ██ ██    ██ ██    ██ 
- ██████  ██    ██ ██    ██ 
- ██   ██ ██    ██  ██  ██  
- ██   ██  ██████    ████   
+ █████╗   ██████╗ ███████╗███╗  ██╗████████╗██╗ ██████╗
+██╔══██╗ ██╔════╝ ██╔════╝████╗ ██║╚══██╔══╝██║██╔════╝
+███████║ ██║  ███╗█████╗  ██╔██╗██║   ██║   ██║██║     
+██╔══██║ ██║   ██║██╔══╝  ██║╚████║   ██║   ██║██║     
+██║  ██║ ╚██████╔╝███████╗██║ ╚███║   ██║   ██║╚██████╗
+╚═╝  ╚═╝  ╚═════╝ ╚══════╝╚═╝  ╚══╝   ╚═╝   ╚═╝ ╚═════╝
+██████╗  ███████╗██╗   ██╗ ██████╗ ██████╗  ███████╗   
+██╔══██╗ ██╔════╝██║   ██║██╔═══██╗██╔══██╗ ██╔════╝   
+██║  ██║ █████╗  ██║   ██║██║   ██║██████╔╝ ███████╗   
+██║  ██║ ██╔══╝  ╚██╗ ██╔╝██║   ██║██╔═══╝  ╚════██║   
+██████╔╝ ███████╗ ╚████╔╝ ╚██████╔╝██║      ███████║   
+╚═════╝  ╚══════╝  ╚═══╝   ╚═════╝ ╚═╝      ╚══════╝   
 `}
       </pre>
-      <div className="text-[10px] mt-1">AGENTIC ENGINEER SINCE 1986</div>
+      <div className="text-[8px] md:text-[10px] mt-1">INFRASTRUCTURE AUTOMATION SINCE 2025</div>
     </div>
   );
 
   return (
     <Dialog open={open} modal>
-      <DialogContent className="bg-cyber-black border-[#33FF00]/30 p-6 max-w-sm mx-auto font-micro text-[#33FF00] dot-matrix-container" aria-describedby="loading-description">
-        <DialogTitle className="sr-only">RUVIX OS1.9z Loading Screen</DialogTitle>
-        <div id="loading-description" className="flex flex-col space-y-4">
-          <div className="text-center text-lg tracking-widest border-b border-[#33FF00]/30 pb-2 mb-2">
-            RUVIX OS1.9z
+      <DialogContent className="bg-cyber-black border-[#33FF00]/30 p-4 max-w-md mx-auto font-micro text-[#33FF00] dot-matrix-container" aria-describedby="loading-description">
+        <DialogTitle className="sr-only">Agentic DevOps Loading Screen</DialogTitle>
+        <div id="loading-description" className="flex flex-col space-y-2">
+          <div className="text-center text-lg tracking-widest border-b border-[#33FF00]/30 pb-2 mb-1">
+            AGENTIC DEVOPS v1.0
           </div>
           
-          {/* 8-bit style rUv logo */}
-          {ruvLogo}
+          {/* ASCII art logo for Agentic DevOps */}
+          {devOpsLogo}
           
-          <div className="h-48 md:h-56 overflow-y-auto mb-4 text-xs pr-1">
+          <div className="h-40 md:h-48 overflow-y-auto mb-2 text-xs pr-1">
             {visibleMessages.map((message, index) => (
               <div key={index} className="mb-1 fade-in">
                 {"> "}{message}
@@ -149,9 +155,9 @@ const LoadingScreen = ({ open, onComplete }: LoadingScreenProps) => {
             <div ref={messagesEndRef} />
           </div>
           
-          <div className="space-y-2">
+          <div className="space-y-1">
             <div className="flex justify-between text-xs">
-              <span>LOADING SYSTEM</span>
+              <span>LOADING DEVOPS SYSTEM</span>
               <span>{progress}%</span>
             </div>
             <Progress 
@@ -162,8 +168,8 @@ const LoadingScreen = ({ open, onComplete }: LoadingScreenProps) => {
           </div>
           
           {loadingComplete && (
-            <div className="text-center text-sm mt-2 animate-pulse-slow">
-              SYSTEM READY - PRESS ANY KEY
+            <div className="text-center text-sm mt-1 animate-pulse-slow">
+              AGENTIC DEVOPS READY - PRESS ANY KEY
             </div>
           )}
         </div>

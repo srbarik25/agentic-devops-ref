@@ -1,12 +1,14 @@
-
 import React, { useState } from 'react';
-import { Info, HelpCircle, Settings, Terminal, Power, Menu, X, ChevronLeft, MessageCircle } from 'lucide-react';
+import { Info, HelpCircle, Settings, Terminal, Power, Menu, X, ChevronLeft, MessageCircle, Cloud, GitBranch, Upload } from 'lucide-react';
 import NavButton from './NavButton';
 import { Drawer, DrawerContent, DrawerTrigger, DrawerClose } from '@/components/ui/drawer';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { cn } from '@/lib/utils';
 import CommandPrompt from './CommandPrompt';
 import { Button } from './ui/button';
+import InstanceList from './InstanceList';
+import RepositoryList from './RepositoryList';
+import { useDevOps } from '../contexts/DevOpsContext';
 
 interface NavigationScreen {
   id: string;
@@ -29,6 +31,7 @@ const NavigationMenu: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [confirmPowerAction, setConfirmPowerAction] = useState<PowerAction | null>(null);
   const [showCommandPrompt, setShowCommandPrompt] = useState(false);
+  const { ec2Instances, repositories, loading } = useDevOps();
   
   const powerActions: PowerAction[] = [
     {
@@ -91,6 +94,7 @@ const NavigationMenu: React.FC = () => {
             <p>DISPLAY: 40×25 TEXT MODE</p>
             <p>BUILD: 19840112</p>
             <p>STATUS: OPERATIONAL</p>
+            <p>DEVOPS MODULE: ACTIVE</p>
           </div>
         </div>
       )
@@ -106,6 +110,9 @@ const NavigationMenu: React.FC = () => {
             <p><span className="text-[#33FF00]">HELP</span> - This help screen</p>
             <p><span className="text-[#33FF00]">CONFIG</span> - System configuration</p>
             <p><span className="text-[#33FF00]">CMDS</span> - Command line access</p>
+            <p><span className="text-[#33FF00]">AWS</span> - AWS cloud services</p>
+            <p><span className="text-[#33FF00]">GITHUB</span> - GitHub repositories</p>
+            <p><span className="text-[#33FF00]">DEPLOY</span> - Deployment operations</p>
             <p><span className="text-[#33FF00]">POWER</span> - System shutdown</p>
           </div>
         </div>
@@ -171,6 +178,88 @@ const NavigationMenu: React.FC = () => {
       )
     },
     {
+      id: 'aws',
+      title: 'AWS SERVICES',
+      content: (
+        <div className="p-4">
+          <h2 className="text-[#33FF00] font-micro mb-4 uppercase tracking-widest">AWS Cloud Services</h2>
+          {loading ? (
+            <div className="text-center text-[#33FF00]/70 animate-pulse">Loading EC2 instances...</div>
+          ) : (
+            <InstanceList 
+              instances={ec2Instances} 
+              onSelect={(instance) => {
+                console.log('Selected instance:', instance);
+                // Handle instance selection
+              }}
+            />
+          )}
+          <div className="mt-4">
+            <button 
+              onClick={() => setShowCommandPrompt(true)}
+              className="w-full border border-[#33FF00]/30 p-2 bg-black/50 flex justify-center items-center text-[#33FF00] hover:bg-[#111] transition-colors"
+            >
+              OPEN EC2 TERMINAL
+            </button>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'github',
+      title: 'GITHUB REPOSITORIES',
+      content: (
+        <div className="p-4">
+          <h2 className="text-[#33FF00] font-micro mb-4 uppercase tracking-widest">GitHub Repositories</h2>
+          {loading ? (
+            <div className="text-center text-[#33FF00]/70 animate-pulse">Loading repositories...</div>
+          ) : (
+            <RepositoryList 
+              repositories={repositories} 
+              onSelect={(repo) => {
+                console.log('Selected repository:', repo);
+                // Handle repository selection
+              }}
+            />
+          )}
+          <div className="mt-4">
+            <button 
+              onClick={() => setShowCommandPrompt(true)}
+              className="w-full border border-[#33FF00]/30 p-2 bg-black/50 flex justify-center items-center text-[#33FF00] hover:bg-[#111] transition-colors"
+            >
+              OPEN GITHUB TERMINAL
+            </button>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'deploy',
+      title: 'DEPLOYMENT OPERATIONS',
+      content: (
+        <div className="p-4">
+          <h2 className="text-[#33FF00] font-micro mb-4 uppercase tracking-widest">Deployment Operations</h2>
+          <div className="space-y-3">
+            <button 
+              className="w-full p-3 border border-[#33FF00]/30 bg-[#111] hover:bg-[#222] text-[#33FF00] font-micro uppercase text-sm transition-colors text-left"
+              onClick={() => setShowCommandPrompt(true)}
+            >
+              GITHUB TO EC2 DEPLOYMENT
+            </button>
+            <button 
+              className="w-full p-3 border border-[#33FF00]/30 bg-[#111] hover:bg-[#222] text-[#33FF00] font-micro uppercase text-sm transition-colors text-left"
+              onClick={() => setShowCommandPrompt(true)}
+            >
+              GITHUB TO S3 DEPLOYMENT
+            </button>
+          </div>
+          <div className="mt-4 text-[#33FF00]/70 text-sm">
+            <p>Deployment operations will be fully implemented in Phase 3.</p>
+          </div>
+        </div>
+      )
+    },
+    {
       id: 'power',
       title: 'POWER OPTIONS',
       content: (
@@ -209,7 +298,7 @@ const NavigationMenu: React.FC = () => {
   };
 
   const renderDesktopNav = () => (
-    <div className="grid grid-cols-5 gap-1 md:gap-3 mt-1 md:mt-2">
+    <div className="grid grid-cols-8 gap-1 md:gap-3 mt-1 md:mt-2">
       <NavButton 
         icon={Info} 
         label="INFO" 
@@ -231,6 +320,21 @@ const NavigationMenu: React.FC = () => {
         onClick={() => handleNavButtonClick('cmds')}
       />
       <NavButton 
+        icon={Cloud} 
+        label="AWS" 
+        onClick={() => handleNavButtonClick('aws')}
+      />
+      <NavButton 
+        icon={GitBranch} 
+        label="GITHUB" 
+        onClick={() => handleNavButtonClick('github')}
+      />
+      <NavButton 
+        icon={Upload} 
+        label="DEPLOY" 
+        onClick={() => handleNavButtonClick('deploy')}
+      />
+      <NavButton 
         icon={Power} 
         label="POWER" 
         onClick={() => handleNavButtonClick('power')}
@@ -246,19 +350,19 @@ const NavigationMenu: React.FC = () => {
         onClick={() => setIsDrawerOpen(true)}
       />
       <NavButton 
-        icon={Info} 
-        label="INFO" 
-        onClick={() => handleNavButtonClick('info')}
+        icon={Terminal} 
+        label="CMDS" 
+        onClick={() => handleNavButtonClick('cmds')}
       />
       <NavButton 
-        icon={HelpCircle} 
-        label="HELP" 
-        onClick={() => handleNavButtonClick('help')}
+        icon={Cloud} 
+        label="AWS" 
+        onClick={() => handleNavButtonClick('aws')}
       />
       <NavButton 
-        icon={Settings} 
-        label="CONFIG" 
-        onClick={() => handleNavButtonClick('config')}
+        icon={GitBranch} 
+        label="GITHUB" 
+        onClick={() => handleNavButtonClick('github')}
       />
       <NavButton 
         icon={Power} 
