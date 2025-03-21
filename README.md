@@ -2,6 +2,12 @@
 
 A fully autonomous, AI-powered DevOps platform for managing cloud infrastructure across multiple providers, with AWS and GitHub integration, powered by OpenAI's Agents SDK.
 
+- ⭐ Try it Here: agentic-devops.fly.dev 
+
+- 🍕 Github Repo: https://github.com/agenticsorg/devops
+
+- 🍺 Support Agentics Foundation: https://agentics.org/memberships
+
 ## Introduction
 
 Agentic DevOps represents the next step in infrastructure management, a fully autonomous system that doesn't just assist with DevOps tasks but can independently plan, execute, and optimize your entire infrastructure lifecycle. 

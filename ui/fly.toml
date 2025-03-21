@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for vibing on 2025-03-20T20:55:45Z
+# fly.toml app configuration file generated for agentic-devops on 2025-03-21T18:07:08Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'vibing'
+app = 'agentic-devops'
 primary_region = 'lax'
 
 [build]
