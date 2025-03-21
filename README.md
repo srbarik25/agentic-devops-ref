@@ -2,13 +2,14 @@
 
 A fully autonomous, AI-powered DevOps platform for managing cloud infrastructure across multiple providers, with AWS and GitHub integration, powered by OpenAI's Agents SDK.
 
-*Created by rUv, from the Agentics Foundation*
-
 ## Introduction
 
-Agentic DevOps represents the next evolution in infrastructure management—a fully autonomous system that doesn't just assist with DevOps tasks but can independently plan, execute, and optimize your entire infrastructure lifecycle. Built on the foundation of OpenAI's Agents SDK, this platform goes beyond traditional automation by incorporating true AI-driven decision-making capabilities.
+Agentic DevOps represents the next step in infrastructure management, a fully autonomous system that doesn't just assist with DevOps tasks but can independently plan, execute, and optimize your entire infrastructure lifecycle. 
+
+Built on the foundation of advanced AI capabilities, this platform goes beyond traditional automation by incorporating true AI-driven decision-making capabilities.
 
 The system can autonomously:
+
 - Provision and configure infrastructure based on high-level requirements
 - Monitor and detect anomalies across your environment
 - Self-heal infrastructure issues without human intervention
@@ -17,836 +18,269 @@ The system can autonomously:
 - Manage complex multi-environment deployments
 - Learn from past operations to improve future performance
 
-Agentic DevOps serves as an intelligent co-pilot for your infrastructure—or even as a fully autonomous operator—understanding complex requirements, executing precise commands, adapting to changing conditions, and providing valuable insights across your entire DevOps workflow. Whether you're managing AWS resources, working with GitHub repositories, or orchestrating complex deployments, Agentic DevOps provides a unified, intelligent interface that simplifies these tasks while maintaining security and best practices.
+Agentic DevOps serves as an intelligent co-pilot for your infrastructure, or even as a fully autonomous operator, understanding complex requirements, executing precise commands, adapting to changing conditions, and providing valuable insights across your entire DevOps workflow. Whether you're managing AWS resources, working with GitHub repositories, or orchestrating complex deployments, Agentic DevOps provides a unified, intelligent interface that simplifies these tasks while maintaining security and best practices.
 
 ## Overview
 
 Agentic DevOps is designed to transform cloud infrastructure management through autonomous operation and intelligent decision-making. It provides a consistent interface for working with various cloud providers and services while adding a layer of AI-driven automation that can operate independently when needed.
 
-### Key Benefits
+Key benefits include:
 
-| Benefit | Description |
-|---------|-------------|
-| **Autonomous Operation** | Deploy infrastructure and applications with minimal human oversight |
-| **Self-Healing Systems** | Automatically detect and remediate issues before they impact users |
-| **Continuous Optimization** | Intelligently adjust resources based on actual usage patterns |
-| **Reduced Complexity** | Manage multiple cloud services through a single, intelligent interface |
-| **Increased Efficiency** | Eliminate repetitive tasks through true autonomous automation |
-| **Enhanced Security** | Built-in security guardrails with proactive vulnerability detection |
-| **Natural Language Control** | Interact with your infrastructure using plain English |
-| **Extensibility** | Easily add support for new services and providers |
-| **Comprehensive Documentation** | Detailed guides and examples for all features |
+- **Autonomous Operation**: Deploy infrastructure and applications with minimal human oversight
+- **Self-Healing Systems**: Automatically detect and remediate issues before they impact users
+- **Continuous Optimization**: Intelligently adjust resources based on actual usage patterns
+- **Reduced Complexity**: Manage multiple cloud services through a single, intelligent interface
+- **Increased Efficiency**: Eliminate repetitive tasks through true autonomous automation
+- **Enhanced Security**: Built-in security guardrails with proactive vulnerability detection
+- **Natural Language Control**: Interact with your infrastructure using plain English
+- **Extensibility**: Easily add support for new services and providers
+- **Comprehensive Documentation**: Detailed guides and examples for all features
 
-## Features
+## Table of Contents
 
-### Core Capabilities
+- [Features & Core Capabilities](#features--core-capabilities)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Documentation](#documentation)
+- [Examples](#examples)
+- [Architecture](#architecture)
+- [Deployment Options](#deployment-options)
+- [Contributing](#contributing)
+- [License](#license)
 
-#### Autonomous Infrastructure Management
+## Features & Core Capabilities
 
-| Feature | Description |
-|---------|-------------|
-| Self-provisioning | Infrastructure based on application requirements |
-| Automatic scaling | Based on real-time demand |
-| Intelligent optimization | Resource optimization for cost efficiency |
-| Anomaly detection | And autonomous remediation |
-| Security posture | Continuous security posture improvement |
+| Category | Capabilities |
+|----------|--------------|
+| **Autonomous Infrastructure Management** | • Self-provisioning infrastructure based on application requirements<br>• Automatic scaling based on real-time demand<br>• Intelligent resource optimization for cost efficiency<br>• Anomaly detection and autonomous remediation<br>• Predictive capacity planning<br>• Self-documenting infrastructure changes |
+| **Intelligent Agents** | • Specialized agents for different DevOps domains<br>• Multi-agent collaboration for complex tasks<br>• Contextual awareness of infrastructure state<br>• Memory of past operations and outcomes<br>• Reasoning capabilities for complex problem-solving<br>• Adaptive learning from operational patterns |
+| **Natural Language Interaction** | • Infrastructure management via conversational commands<br>• Complex multi-step operations from simple instructions<br>• Contextual understanding of technical requirements<br>• Clarification requests when instructions are ambiguous<br>• Explanation of actions in plain language |
+| **Multi-Cloud Support** | • AWS (primary support)<br>• Azure (planned)<br>• Google Cloud (planned)<br>• DigitalOcean (planned)<br>• Unified interface across all providers<br>• Cross-cloud resource management |
+| **Security and Compliance** | • Secure credential management with keyring integration<br>• Least privilege access patterns<br>• Compliance checking for industry standards<br>• Security best practice enforcement<br>• Audit logging and reporting<br>• Automated vulnerability scanning<br>• Security posture recommendations |
+| **Observability and Monitoring** | • Resource health monitoring<br>• Performance metrics collection<br>• Cost tracking and optimization<br>• Anomaly detection<br>• Custom alerting rules<br>• Predictive failure analysis<br>• Root cause determination |
+| **Deployment Automation** | • CI/CD pipeline integration<br>• Blue/green deployment strategies<br>• Canary releases<br>• Rollback capabilities<br>• Deployment verification<br>• Feature flag management<br>• Release train orchestration |
+| **Disaster Recovery** | • Automated backup management<br>• Cross-region replication<br>• Recovery time objective (RTO) optimization<br>• Disaster recovery testing<br>• Failover automation<br>• Recovery simulation and validation |
+| **Workflow Orchestration** | • Complex multi-step workflow automation<br>• Conditional execution paths<br>• Error handling and recovery<br>• Parallel task execution<br>• Human-in-the-loop approvals<br>• Workflow visualization and monitoring |
+| **Knowledge Management** | • Self-documenting operations<br>• Automated runbook generation<br>• Institutional knowledge capture<br>• Best practice recommendations<br>• Troubleshooting guidance<br>• Historical context preservation |
 
-#### AWS Infrastructure Management
+### Autonomous Capabilities in Detail
 
-| Feature | Description |
-|---------|-------------|
-| EC2 | Instance lifecycle management (create, start, stop, terminate) |
-| S3 | Bucket operations (create, list, upload, download) |
-| VPC | Configuration and management |
-| IAM | Role and policy management |
-| CloudFormation | Template deployment |
-| Lambda | Function management |
-| ECS | Container orchestration |
-| RDS | Database administration |
+Agentic DevOps takes automation to the next level with true autonomous capabilities:
 
-#### GitHub Integration
+#### Autonomous Decision Making
+The platform can make informed decisions about infrastructure changes, scaling operations, and resource allocation without human intervention. It evaluates multiple factors including performance metrics, cost implications, security considerations, and business priorities to determine the optimal course of action.
 
-| Feature | Description |
-|---------|-------------|
-| Repository management | Create, clone, and manage repositories |
-| Issue and PR tracking | Track and manage issues and pull requests |
-| Code deployment | Deployment pipelines from GitHub to infrastructure |
-| Webhook configuration | Set up and manage webhooks |
-| GitHub Actions | Integration with GitHub Actions |
-| Repository analytics | Statistics and analytics for repositories |
-| Security analysis | Code scanning and security analysis |
+#### Self-Healing Infrastructure
+When issues are detected, Agentic DevOps doesn't just alert—it takes action. The system can:
+- Automatically restart failed services
+- Replace unhealthy instances
+- Adjust resource allocations to address performance bottlenecks
+- Implement temporary workarounds while developing permanent solutions
+- Roll back problematic deployments
 
-#### Autonomous Deployment
+#### Continuous Learning
+The platform improves over time by:
+- Learning from successful and unsuccessful operations
+- Building patterns of normal vs. abnormal behavior
+- Adapting to your specific environment and requirements
+- Refining its decision-making based on outcomes
+- Incorporating feedback from human operators
 
-| Feature | Description |
-|---------|-------------|
-| Zero-touch deployment | Continuous deployment with minimal intervention |
-| Environment configuration | Automatic environment configuration |
-| Intelligent rollback | Automatic rollback on failure detection |
-| Progressive deployment | Deployment with health monitoring |
-| Traffic shifting | Based on real-time metrics |
-| Deployment scheduling | Schedule optimization for deployments |
-| Cross-environment consistency | Enforcement of consistency across environments |
+#### Predictive Operations
+Rather than just reacting to events, Agentic DevOps can:
+- Predict resource needs before they become critical
+- Identify potential failures before they occur
+- Recommend preemptive maintenance
+- Suggest optimizations based on usage patterns
+- Schedule operations during optimal time windows
 
-#### Infrastructure as Code
+#### Autonomous Security Management
+The platform continuously monitors and enhances your security posture by:
+- Detecting and remediating common security misconfigurations
+- Implementing security patches and updates
+- Enforcing security best practices across your infrastructure
+- Identifying unusual access patterns that may indicate security threats
+- Automatically rotating credentials and secrets
 
-| Feature | Description |
-|---------|-------------|
-| CloudFormation | Template generation and deployment |
-| Terraform | Integration with Terraform |
-| Custom IaC | Custom IaC template support |
-| Version control | Version-controlled infrastructure |
-| Drift detection | Detection and remediation of configuration drift |
-
-#### AI-Powered Assistance
-
-| Feature | Description |
-|---------|-------------|
-| Natural language | Infrastructure commands using plain English |
-| Troubleshooting | Automated troubleshooting and diagnostics |
-| Optimization | Intelligent resource optimization recommendations |
-| Security analysis | Security posture analysis |
-| Cost optimization | Suggestions for cost optimization |
-
-### Advanced Features
-
-#### Multi-Cloud Support
-
-| Provider | Status |
-|----------|--------|
-| AWS | Primary support |
-| Azure | Planned |
-| Google Cloud | Planned |
-| DigitalOcean | Planned |
-
-#### Security and Compliance
-
-| Feature | Description |
-|---------|-------------|
-| Credential management | Secure credential management with keyring integration |
-| Least privilege | Least privilege access patterns |
-| Compliance checking | For industry standards |
-| Best practices | Security best practice enforcement |
-| Audit logging | Logging and reporting |
-
-#### Observability and Monitoring
-
-| Feature | Description |
-|---------|-------------|
-| Health monitoring | Resource health monitoring |
-| Performance metrics | Collection of performance metrics |
-| Cost tracking | Cost tracking and optimization |
-| Anomaly detection | Detection of anomalies |
-| Custom alerting | Custom alerting rules |
-
-#### Deployment Automation
-
-| Feature | Description |
-|---------|-------------|
-| CI/CD integration | Integration with CI/CD pipelines |
-| Blue/green deployment | Support for blue/green deployment strategies |
-| Canary releases | Support for canary releases |
-| Rollback | Rollback capabilities |
-| Verification | Deployment verification |
-
-#### Disaster Recovery
-
-| Feature | Description |
-|---------|-------------|
-| Backup management | Automated backup management |
-| Cross-region replication | Replication across regions |
-| RTO optimization | Recovery time objective optimization |
-| DR testing | Disaster recovery testing |
-| Failover automation | Automated failover |
-
-## Getting Started
+## Installation
 
 ### Prerequisites
 
 - Python 3.8 or higher
-- AWS account with programmatic access
-- GitHub account (for GitHub integration features)
-- OpenAI API key (for AI-powered features)
-- Required Python packages (see requirements.txt)
+- OpenAI API key
+- AWS credentials (for AWS operations)
+- GitHub token (for GitHub operations)
 
-### Installation
+### Install from PyPI
 
 ```bash
-# Clone the repository
+pip install agentic-devops
+```
+
+### Install from Source
+
+```bash
 git clone https://github.com/agenticsorg/devops.git
 cd agentic-devops
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure credentials
-cp env.example .env
-# Edit .env with your AWS, GitHub, and OpenAI credentials
+pip install -e .
 ```
 
-### Configuration
+### Environment Setup
 
-Agentic DevOps supports multiple configuration methods:
+Create a `.env` file in your project directory:
 
-1. **Environment Variables**: Set credentials and configuration in your environment
-2. **Configuration File**: Use YAML or JSON configuration files
-3. **Credential Store**: Securely store credentials in your system's keyring
-4. **AWS Profiles**: Leverage existing AWS CLI profiles
-
-Example configuration file (`config.yaml`):
-
-```yaml
-aws:
-  region: us-west-2
-  profile: agentic-devops
-  default_vpc: vpc-1234567890abcdef0
-  
-github:
-  organization: your-organization
-  default_branch: main
-  
-openai:
-  model: gpt-4o
-  temperature: 0.2
-  
-logging:
-  level: INFO
-  file: agentic-devops.log
-
-autonomous:
-  level: high  # Options: low, medium, high
-  approval_required: false  # Set to true to require human approval for critical actions
-  learning_enabled: true  # Enable learning from past operations
+```
+OPENAI_API_KEY=your-openai-api-key
+AWS_ACCESS_KEY_ID=your-aws-access-key
+AWS_SECRET_ACCESS_KEY=your-aws-secret-key
+AWS_REGION=us-east-1
+GITHUB_TOKEN=your-github-token
 ```
 
-## Usage
-
-### Python API
-
-```python
-from agentic_devops.aws.ec2 import EC2Service
-from agentic_devops.aws.s3 import S3Service
-from agentic_devops.github import GitHubService
-from agentic_devops.core.context import DevOpsContext
-
-# Initialize context
-context = DevOpsContext(
-    user_id="user123",
-    aws_region="us-west-2",
-    github_org="your-organization"
-)
-
-# Initialize services
-ec2 = EC2Service(context=context)
-s3 = S3Service(context=context)
-github = GitHubService(context=context)
-
-# List EC2 instances
-instances = ec2.list_instances(filters=[{"Name": "instance-state-name", "Values": ["running"]}])
-print(f"Found {len(instances)} running EC2 instances")
-
-# Create S3 bucket with encryption
-bucket = s3.create_bucket(
-    name="my-secure-bucket",
-    region="us-west-2",
-    encryption={"algorithm": "AES256"},
-    versioning=True
-)
-
-# Deploy from GitHub to EC2
-ec2.deploy_from_github(
-    instance_id="i-1234567890abcdef0",
-    repository="your-org/your-repo",
-    branch="main",
-    deploy_path="/var/www/html",
-    setup_script="scripts/setup.sh",
-    environment_variables={"ENV": "production"}
-)
-```
-
-### Autonomous Deployment Example
-
-```python
-from agentic_devops.autonomous import AutonomousDeployer
-from agentic_devops.core.context import DevOpsContext
-
-# Initialize context
-context = DevOpsContext(
-    user_id="user123",
-    aws_region="us-west-2",
-    github_org="your-organization"
-)
-
-# Initialize the autonomous deployer
-deployer = AutonomousDeployer(context=context)
-
-# Define high-level deployment requirements
-deployment_spec = {
-    "application": "web-service",
-    "source": {
-        "type": "github",
-        "repository": "your-org/web-service",
-        "branch": "main"
-    },
-    "target": {
-        "environment": "production",
-        "regions": ["us-west-2", "us-east-1"],
-        "scaling": {
-            "min_instances": 2,
-            "max_instances": 10,
-            "auto_scale": True
-        }
-    },
-    "strategy": {
-        "type": "blue-green",
-        "health_check_path": "/health",
-        "rollback_on_failure": True
-    },
-    "notifications": {
-        "slack_channel": "#deployments",
-        "email": "team@example.com"
-    }
-}
-
-# Let the autonomous system handle the entire deployment
-deployment = deployer.deploy(deployment_spec)
-
-# Monitor the autonomous deployment
-status = deployer.get_status(deployment.id)
-print(f"Deployment status: {status.phase}")
-print(f"Actions taken: {len(status.actions)}")
-for action in status.actions:
-    print(f"- {action.timestamp}: {action.description} ({action.status})")
-```
+## Quick Start
 
 ### CLI Usage
 
-Agentic DevOps provides a powerful command-line interface with rich output formatting:
-
 ```bash
-# List EC2 instances with filtering and formatting
-agentic-devops ec2 list-instances --state running --region us-west-2 --output table
+# List EC2 instances
+agentic-devops ec2 list-instances --region us-east-1
 
-# Create an EC2 instance with detailed configuration
-agentic-devops ec2 create-instance \
-  --name "web-server" \
-  --type t3.medium \
-  --ami-id ami-0c55b159cbfafe1f0 \
-  --subnet-id subnet-1234567890abcdef0 \
-  --security-group-ids sg-1234567890abcdef0 \
-  --key-name my-key \
-  --user-data-file startup-script.sh \
-  --tags "Environment=Production,Project=Website" \
-  --wait
+# Get GitHub repository information
+agentic-devops github get-repository --repo owner/repo
 
-# Get GitHub repository details with specific information
-agentic-devops github get-repo your-org/your-repo --output json
-
-# Create a GitHub issue with labels and assignees
-agentic-devops github create-issue \
-  --repo your-org/your-repo \
-  --title "Update dependencies" \
-  --body "We need to update all dependencies to the latest versions." \
-  --labels "maintenance,dependencies" \
-  --assignees "username1,username2"
-
-# Autonomous deployment with high-level requirements
-agentic-devops autonomous deploy \
-  --app "web-service" \
-  --source "github:your-org/web-service:main" \
-  --environment production \
-  --regions "us-west-2,us-east-1" \
-  --strategy blue-green \
-  --auto-scale \
-  --notify "slack:#deployments,email:team@example.com"
+# Deploy from GitHub to EC2
+agentic-devops deploy github-to-ec2 --repo owner/repo --branch main --instance-id i-1234567890abcdef0
 ```
 
-## OpenAI Agents Integration
-
-Agentic DevOps leverages OpenAI's Agents SDK to provide powerful AI-driven infrastructure management capabilities. This integration enables natural language interactions with your cloud resources, intelligent automation, and context-aware assistance.
-
-### Key Benefits of OpenAI Agents Integration
-
-| Benefit | Description |
-|---------|-------------|
-| **Natural Language Control** | Manage infrastructure using plain English commands |
-| **Context-Aware Operations** | Maintains context across interactions for coherent workflows |
-| **Intelligent Automation** | Automate complex tasks with AI-driven decision making |
-| **Adaptive Learning** | Improve over time based on your specific infrastructure patterns |
-| **Multi-Step Reasoning** | Break down complex operations into logical steps |
-| **Guardrails and Safety** | Built-in safeguards to prevent destructive operations |
-
-### Agent Architecture
-
-Agentic DevOps uses a modular architecture with specialized agents for different domains:
-
-1. **EC2 Agent**: Specializes in EC2 instance management
-2. **S3 Agent**: Focuses on S3 bucket operations
-3. **GitHub Agent**: Handles GitHub repository management
-4. **Deployment Agent**: Orchestrates deployment workflows
-5. **Orchestrator Agent**: Coordinates between specialized agents
-
-Each agent is equipped with domain-specific tools and knowledge, allowing for deep expertise in their respective areas while maintaining a unified interface for the user.
-
-### Basic Usage Example
-
-```python
-from agents import Agent, Runner
-from agentic_devops.agents.tools import (
-    list_ec2_instances,
-    start_ec2_instances,
-    stop_ec2_instances,
-    create_ec2_instance
-)
-from agentic_devops.core.context import DevOpsContext
-
-# Create a context with user information
-context = DevOpsContext(
-    user_id="user123",
-    aws_region="us-west-2",
-    github_org="your-organization"
-)
-
-# Create an EC2-focused agent
-ec2_agent = Agent(
-    name="EC2 Assistant",
-    instructions="""
-    You are an EC2 management assistant that helps users manage their AWS EC2 instances.
-    You can list, start, stop, and create EC2 instances based on user requests.
-    Always confirm important actions before executing them and provide clear explanations.
-    """,
-    tools=[
-        list_ec2_instances,
-        start_ec2_instances,
-        stop_ec2_instances,
-        create_ec2_instance
-    ],
-    model="gpt-4o"
-)
-
-# Run the agent with a user query
-result = Runner.run_sync(
-    ec2_agent,
-    "I need to launch 3 t2.micro instances for a web application in us-west-2. They should have the tag 'Project=WebApp'.",
-    context=context
-)
-
-print(result.final_output)
-```
-
-### Advanced Agent Orchestration
-
-For more complex workflows, you can use agent orchestration to coordinate between specialized agents:
-
-```python
-from agents import Agent, Runner, Handoff
-from agentic_devops.agents.tools import (
-    # EC2 tools
-    list_ec2_instances,
-    start_ec2_instances,
-    stop_ec2_instances,
-    create_ec2_instance,
-    # S3 tools
-    list_s3_buckets,
-    create_s3_bucket,
-    # GitHub tools
-    get_github_repository,
-    list_github_issues,
-    create_github_issue,
-    # Deployment tools
-    deploy_to_ec2
-)
-
-# Create specialized agents
-ec2_agent = Agent(
-    name="EC2 Agent",
-    instructions="You are an EC2 management specialist...",
-    tools=[list_ec2_instances, start_ec2_instances, stop_ec2_instances, create_ec2_instance],
-    model="gpt-4o"
-)
-
-s3_agent = Agent(
-    name="S3 Agent",
-    instructions="You are an S3 management specialist...",
-    tools=[list_s3_buckets, create_s3_bucket],
-    model="gpt-4o"
-)
-
-github_agent = Agent(
-    name="GitHub Agent",
-    instructions="You are a GitHub management specialist...",
-    tools=[get_github_repository, list_github_issues, create_github_issue],
-    model="gpt-4o"
-)
-
-deployment_agent = Agent(
-    name="Deployment Agent",
-    instructions="You are a deployment specialist...",
-    tools=[deploy_to_ec2],
-    model="gpt-4o"
-)
-
-# Create an orchestrator agent that can delegate to specialized agents
-orchestrator = Agent(
-    name="DevOps Orchestrator",
-    instructions="""
-    You are a DevOps orchestrator that helps users manage their cloud infrastructure and code repositories.
-    You can delegate tasks to specialized agents for EC2, S3, GitHub, and deployments.
-    Determine which specialized agent is best suited for each user request and hand off accordingly.
-    """,
-    handoffs=[
-        Handoff(agent=ec2_agent, description="Handles EC2 instance management tasks"),
-        Handoff(agent=s3_agent, description="Handles S3 bucket operations"),
-        Handoff(agent=github_agent, description="Handles GitHub repository management"),
-        Handoff(agent=deployment_agent, description="Handles deployment workflows")
-    ],
-    model="gpt-4o"
-)
-
-# Run the orchestrator with a complex query
-result = Runner.run_sync(
-    orchestrator,
-    """
-    I need to set up a new web application deployment:
-    1. Create 2 t2.micro EC2 instances with the tag 'Project=WebApp'
-    2. Create an S3 bucket for static assets with versioning enabled
-    3. Clone our 'company/webapp' GitHub repository to the EC2 instances
-    4. Create a GitHub issue to track this deployment
-    """,
-    context=context
-)
-
-print(result.final_output)
-```
-
-### Asynchronous Agent Execution
-
-For high-performance applications, you can use asynchronous execution:
+### Python API Usage
 
 ```python
 import asyncio
-from agents import Runner
+from agentic_devops.src.aws import list_ec2_instances
+from agentic_devops.src.github import get_repository
+from agentic_devops.src.core import DevOpsContext
 
-async def run_agent_async():
+async def main():
+    # Create a context
+    context = DevOpsContext(
+        user_id="example-user",
+        aws_region="us-east-1",
+        github_org="example-org"
+    )
+    
+    # List EC2 instances
+    instances = await list_ec2_instances(region="us-east-1", context=context)
+    print(f"Found {len(instances)} instances")
+    
+    # Get repository information
+    repo = await get_repository(repo="example-org/example-repo", context=context)
+    print(f"Repository: {repo.name}, Stars: {repo.stars}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+### Using AI Agents
+
+```python
+import os
+import asyncio
+from agents import Agent, Runner
+from agentic_devops.src.aws import list_ec2_instances, start_ec2_instances, stop_ec2_instances
+from agentic_devops.src.core import DevOpsContext
+
+async def main():
+    # Set up the OpenAI API key
+    os.environ["OPENAI_API_KEY"] = "your-openai-api-key"
+    
+    # Create a DevOps context
+    context = DevOpsContext(
+        user_id="agent-user",
+        aws_region="us-east-1"
+    )
+    
+    # Create an infrastructure agent
+    infrastructure_agent = Agent(
+        name="Infrastructure Agent",
+        instructions="""
+        You are an infrastructure management agent that helps with EC2 instances and other AWS resources.
+        You ensure that deployment targets are properly configured and available.
+        Always verify the state of infrastructure before recommending deployments.
+        """,
+        tools=[list_ec2_instances, start_ec2_instances, stop_ec2_instances],
+        model="gpt-4o"
+    )
+    
+    # Run the agent
     result = await Runner.run(
-        ec2_agent,
-        "List all my EC2 instances in us-west-2 and show their status",
+        infrastructure_agent,
+        "List all EC2 instances in us-east-1 and stop any that are tagged as 'temporary'",
         context=context
     )
-    return result.final_output
-
-# Run the agent asynchronously
-response = asyncio.run(run_agent_async())
-print(response)
-```
-
-### Security Guardrails
-
-Agentic DevOps includes built-in security guardrails to prevent destructive operations:
-
-```python
-from agentic_devops.core.guardrails import (
-    security_guardrail,
-    sensitive_info_guardrail
-)
-
-# Apply security guardrail to check for potentially harmful operations
-@security_guardrail
-def perform_operation(operation_details):
-    # Implementation
-    pass
-
-# Apply sensitive information guardrail to prevent leaking credentials
-@sensitive_info_guardrail
-def generate_response(user_query, system_data):
-    # Implementation
-    pass
-```
-
-### Tracing and Debugging
-
-For debugging and monitoring agent behavior, you can use the tracing functionality:
-
-```python
-from agents.tracing import set_tracing_enabled, get_trace
-
-# Enable tracing
-set_tracing_enabled(True)
-
-# Run the agent
-result = Runner.run_sync(ec2_agent, "List my EC2 instances", context=context)
-
-# Get the trace for analysis
-trace = get_trace()
-print(f"Agent took {len(trace.steps)} steps to complete the task")
-for step in trace.steps:
-    print(f"Step: {step.type}, Duration: {step.duration}ms")
-```
-
-## Advanced Configuration
-
-### Credential Management
-
-Agentic DevOps provides multiple secure options for credential management:
-
-| Method | Description |
-|--------|-------------|
-| **Environment Variables** | Traditional approach using environment variables |
-| **AWS Profiles** | Leverage AWS CLI profiles for credential management |
-| **Keyring Integration** | Store credentials securely in your system's keyring |
-| **IAM Roles** | Use IAM roles for EC2 instances or Lambda functions |
-| **Secrets Manager** | Retrieve credentials from AWS Secrets Manager or similar services |
-
-Example keyring setup:
-
-```python
-from agentic_devops.core.credentials import CredentialManager
-
-# Store credentials securely
-cred_manager = CredentialManager()
-cred_manager.store_aws_credentials(
-    access_key="YOUR_ACCESS_KEY",
-    secret_key="YOUR_SECRET_KEY",
-    region="us-west-2",
-    profile_name="production"
-)
-
-cred_manager.store_github_credentials(
-    token="YOUR_GITHUB_TOKEN",
-    username="your-username"
-)
-
-# Retrieve credentials securely
-aws_creds = cred_manager.get_aws_credentials(profile_name="production")
-github_creds = cred_manager.get_github_credentials()
-```
-
-### Error Handling and Logging
-
-Agentic DevOps provides comprehensive error handling with actionable suggestions:
-
-```python
-from agentic_devops.core.logging import setup_logging
-from agentic_devops.aws.base import AWSServiceError, ResourceNotFoundError
-
-# Setup logging
-logger = setup_logging(level="INFO", log_file="agentic-devops.log")
-
-try:
-    # Attempt to perform an operation
-    ec2.start_instance(instance_id="i-nonexistentid")
-except ResourceNotFoundError as e:
-    # Handle specific error with context
-    logger.error(f"Could not find instance: {e}")
-    logger.info(f"Suggestion: {e.suggestion}")
-    # Take remedial action
-except AWSServiceError as e:
-    # Handle general AWS errors
-    logger.error(f"AWS operation failed: {e}")
-    logger.info(f"Suggestion: {e.suggestion}")
-```
-
-### Extensibility
-
-Agentic DevOps is designed to be easily extended with new services and providers:
-
-| Extension Point | Description |
-|-----------------|-------------|
-| **Service Modules** | Add new AWS services by creating new service modules |
-| **Cloud Providers** | Implement new cloud providers by following the provider interface |
-| **Custom Tools** | Create custom tools for specific workflows |
-| **Plugins** | Develop plugins to extend functionality |
-
-Example of creating a custom service:
-
-```python
-from agentic_devops.aws.base import AWSBaseService
-
-class CustomService(AWSBaseService):
-    """Custom service implementation."""
     
-    SERVICE_NAME = "custom-service"
-    
-    def __init__(self, credentials=None, region=None):
-        super().__init__(credentials, region)
-        # Initialize service-specific resources
-        
-    def custom_operation(self, param1, param2):
-        """Implement custom operation."""
-        try:
-            # Implement operation logic
-            result = self._client.some_operation(
-                Param1=param1,
-                Param2=param2
-            )
-            return self._format_response(result)
-        except Exception as e:
-            # Handle and transform errors
-            self.handle_error(e, "custom_operation")
+    # Print the result
+    print(result.final_output)
+
+if __name__ == "__main__":
+    asyncio.run(main())
 ```
 
-### Creating Custom Agent Tools
+## Documentation
 
-You can extend the agent's capabilities by creating custom tools:
+Comprehensive documentation is available in the [docs](docs/README.md) directory:
 
-```python
-from agents import function_tool
-from pydantic import BaseModel, Field
-from agentic_devops.core.context import DevOpsContext, RunContextWrapper
+- [Architecture Overview](docs/architecture/overview.md)
+- [API Reference](docs/api/cli-commands.md)
+- [Implementation Details](docs/implementation/openai-agents-integration.md)
+- [Deployment Guides](docs/deployment/aws-lambda.md)
+- [User Guides](docs/guides/getting-started.md)
 
-# Define the input schema for your tool
-class CustomOperationInput(BaseModel):
-    resource_id: str = Field(..., description="The ID of the resource to operate on")
-    operation_type: str = Field(..., description="The type of operation to perform")
-    parameters: dict = Field(default={}, description="Additional parameters for the operation")
+## Examples
 
-# Create a function tool
-@function_tool()
-async def custom_operation(
-    wrapper: RunContextWrapper[DevOpsContext],
-    input_data: CustomOperationInput
-) -> dict:
-    """
-    Perform a custom operation on a specified resource.
-    
-    Args:
-        resource_id: The ID of the resource to operate on
-        operation_type: The type of operation to perform (e.g., "analyze", "optimize", "backup")
-        parameters: Additional parameters specific to the operation type
-        
-    Returns:
-        A dictionary containing the operation results
-    """
-    # Access the context
-    context = wrapper.context
-    
-    # Implement your custom logic
-    result = {
-        "resource_id": input_data.resource_id,
-        "operation_type": input_data.operation_type,
-        "status": "completed",
-        "details": {
-            "timestamp": "2023-01-01T00:00:00Z",
-            "user": context.user_id,
-            "region": context.aws_region,
-            "parameters": input_data.parameters
-        }
-    }
-    
-    return result
-```
+The [examples](examples/) directory contains various examples demonstrating the capabilities of the framework:
 
-## Testing
+- [CI/CD Pipeline Agent](examples/ci_cd_pipeline_agent.py)
+- [Disaster Recovery Agent](examples/disaster_recovery_agent.py)
+- [Security Compliance Agent](examples/security_compliance_agent.py)
+- [GitHub to EC2 Deployment](examples/github_to_ec2_deployment.py)
+- [Hello World](examples/hello_world.py)
 
-Agentic DevOps includes comprehensive testing capabilities:
+## Architecture
 
-```bash
-# Run all tests
-python run_all_tests.py
-
-# Run specific test categories
-python -m pytest tests/aws/
-python -m pytest tests/github/
-python -m pytest tests/test_cli.py
-
-# Run tests with specific markers
-python -m pytest -m "aws"
-python -m pytest -m "integration"
-python -m pytest -m "unit"
-```
-
-## Project Structure
+Agentic DevOps follows a modular architecture with several key components:
 
 ```
-agentic-devops/
-├── src/                      # Source code
-│   ├── aws/                  # AWS provider modules
-│   │   ├── base.py           # Base AWS service class
-│   │   ├── ec2.py            # EC2 service module
-│   │   ├── s3.py             # S3 service module
-│   │   ├── vpc.py            # VPC service module
-│   │   ├── iam.py            # IAM service module
-│   │   ├── cloudformation.py # CloudFormation service
-│   │   ├── lambda_service.py # Lambda service
-│   │   ├── ecs.py            # ECS service
-│   │   └── rds.py            # RDS service
-│   ├── github/               # GitHub integration
-│   │   ├── github.py         # GitHub service module
-│   │   ├── issues.py         # Issues management
-│   │   ├── repos.py          # Repository management
-│   │   └── actions.py        # GitHub Actions integration
-│   ├── autonomous/           # Autonomous operations
-│   │   ├── deployer.py       # Autonomous deployment
-│   │   ├── optimizer.py      # Resource optimization
-│   │   ├── monitor.py        # Autonomous monitoring
-│   │   └── learner.py        # Learning system
-│   ├── agents/               # OpenAI Agents integration
-│   │   ├── tools/            # Agent tools
-│   │   │   ├── ec2_tools.py  # EC2 tools
-│   │   │   ├── s3_tools.py   # S3 tools
-│   │   │   └── github_tools.py # GitHub tools
-│   │   └── agents.py         # Agent definitions
-│   └── core/                 # Core functionality
-│       ├── config.py         # Configuration management
-│       ├── credentials.py    # Credential handling
-│       ├── context.py        # Context management
-│       ├── logging.py        # Logging setup
-│       └── guardrails.py     # Security guardrails
-├── cli/                      # Command-line interface
-│   ├── __init__.py
-│   ├── main.py               # CLI entry point
-│   ├── ec2.py                # EC2 commands
-│   ├── s3.py                 # S3 commands
-│   ├── github.py             # GitHub commands
-│   └── deploy.py             # Deployment commands
-├── tests/                    # Test suite
-│   ├── aws/                  # AWS service tests
-│   ├── github/               # GitHub integration tests
-│   ├── core/                 # Core functionality tests
-│   ├── test_cli.py           # CLI tests
-│   └── test_openai_agents.py # OpenAI Agents tests
-├── examples/                 # Example scripts
-│   ├── ec2_examples.py       # EC2 usage examples
-│   ├── s3_examples.py        # S3 usage examples
-│   ├── github_examples.py    # GitHub usage examples
-│   └── openai_agents_ec2_example.py # OpenAI Agents example
-└── docs/                     # Documentation
-    ├── quickstart.md         # Quick start guide
-    ├── advanced_usage.md     # Advanced usage guide
-    ├── error_handling.md     # Error handling guide
-    ├── security.md           # Security best practices
-    └── services/             # Service-specific documentation
-        ├── ec2.md            # EC2 service documentation
-        ├── s3.md             # S3 service documentation
-        └── github.md         # GitHub service documentation
+┌─────────────────────────────────────────────────────────────────┐
+│                     Agentic DevOps Framework                     │
+├─────────────┬─────────────┬─────────────┬─────────────┬─────────┤
+│             │             │             │             │         │
+│  Core       │  AWS        │  GitHub     │  OpenAI     │  CLI    │
+│  Components │  Integration │  Integration│  Agents     │  Layer  │
+│             │             │             │  Integration │         │
+└─────────────┴─────────────┴─────────────┴─────────────┴─────────┘
 ```
+
+For more details, see the [Architecture Overview](docs/architecture/overview.md).
+
+## Deployment Options
+
+Agentic DevOps can be deployed in various ways:
+
+- [Local Development](docs/deployment/local-development.md)
+- [AWS Lambda](docs/deployment/aws-lambda.md)
+- [Docker Containers](docs/deployment/docker.md)
+- [Llama Deployment](docs/deployment/llama-deployment.md)
 
 ## Contributing
 
-Contributions are welcome! Please check out our [contributing guidelines](docs/contributing.md) for details on how to get started.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-### Development Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/agentics-foundation/agentic-devops.git
-cd agentic-devops
-
-# Create a virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install development dependencies
-pip install -r requirements-dev.txt
-
-# Run tests
-python -m pytest
-
-# Check code style
-flake8 src tests
-black src tests
-```
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
