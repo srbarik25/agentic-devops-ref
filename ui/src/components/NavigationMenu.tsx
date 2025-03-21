@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Info, HelpCircle, Settings, Terminal, Power, Menu, X, ChevronLeft, MessageCircle, Cloud, GitBranch, Upload } from 'lucide-react';
+import { Info, HelpCircle, Settings, Terminal, Power, Menu, X, ChevronLeft, MessageCircle, Cloud, GitBranch, Upload, Server } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import NavButton from './NavButton';
 import { Drawer, DrawerContent, DrawerTrigger, DrawerClose } from '@/components/ui/drawer';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
@@ -9,6 +10,7 @@ import { Button } from './ui/button';
 import InstanceList from './InstanceList';
 import RepositoryList from './RepositoryList';
 import { useDevOps } from '../contexts/DevOpsContext';
+import EC2Button from './aws/EC2Button';
 
 interface NavigationScreen {
   id: string;
@@ -26,7 +28,13 @@ interface PowerAction {
   action: () => void;
 }
 
-const NavigationMenu: React.FC = () => {
+interface NavigationMenuProps {
+  onSelectPanel?: (panel: string) => void;
+  activePanel?: string;
+}
+
+const NavigationMenu: React.FC<NavigationMenuProps> = ({ onSelectPanel, activePanel = 'notifications' }) => {
+  const navigate = useNavigate();
   const [activeScreen, setActiveScreen] = useState<string | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [confirmPowerAction, setConfirmPowerAction] = useState<PowerAction | null>(null);
@@ -183,24 +191,42 @@ const NavigationMenu: React.FC = () => {
       content: (
         <div className="p-4">
           <h2 className="text-[#33FF00] font-micro mb-4 uppercase tracking-widest">AWS Cloud Services</h2>
-          {loading ? (
-            <div className="text-center text-[#33FF00]/70 animate-pulse">Loading EC2 instances...</div>
-          ) : (
-            <InstanceList 
-              instances={ec2Instances} 
-              onSelect={(instance) => {
-                console.log('Selected instance:', instance);
-                // Handle instance selection
-              }}
-            />
-          )}
-          <div className="mt-4">
-            <button 
-              onClick={() => setShowCommandPrompt(true)}
-              className="w-full border border-[#33FF00]/30 p-2 bg-black/50 flex justify-center items-center text-[#33FF00] hover:bg-[#111] transition-colors"
-            >
-              OPEN EC2 TERMINAL
-            </button>
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-[#33FF00]/80 text-sm mb-2">EC2 Instances</h3>
+              {loading ? (
+                <div className="text-center text-[#33FF00]/70 animate-pulse">Loading EC2 instances...</div>
+              ) : (
+                <div className="border border-[#33FF00]/30 p-2 rounded-sm">
+                  <p className="text-[#33FF00]/70 text-sm mb-2">
+                    {ec2Instances.length} instance{ec2Instances.length !== 1 ? 's' : ''} available
+                  </p>
+                  <div className="flex flex-col gap-2">
+                    <Button 
+                      variant="outline" 
+                      className="w-full border border-[#33FF00]/30 p-2 bg-black/50 flex justify-center items-center text-[#33FF00] hover:bg-[#111] transition-colors"
+                      onClick={() => {
+                        setIsDrawerOpen(false);
+                        if (onSelectPanel) {
+                          onSelectPanel('ec2');
+                        } else {
+                          navigate('/ec2');
+                        }
+                      }}
+                    >
+                      <Server size={16} className="mr-2" />
+                      OPEN EC2 DASHBOARD
+                    </Button>
+                    <button 
+                      onClick={() => setShowCommandPrompt(true)}
+                      className="w-full border border-[#33FF00]/30 p-2 bg-black/50 flex justify-center items-center text-[#33FF00] hover:bg-[#111] transition-colors text-sm"
+                    >
+                      OPEN EC2 TERMINAL
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )
@@ -219,6 +245,9 @@ const NavigationMenu: React.FC = () => {
               onSelect={(repo) => {
                 console.log('Selected repository:', repo);
                 // Handle repository selection
+                if (onSelectPanel) {
+                  onSelectPanel('github');
+                }
               }}
             />
           )}
@@ -285,10 +314,24 @@ const NavigationMenu: React.FC = () => {
   const handleReturnToMessages = () => {
     setActiveScreen(null);
     setIsDrawerOpen(false);
-    // Add any additional logic needed to return to main message UI
+    if (onSelectPanel) {
+      onSelectPanel('notifications');
+    }
   };
 
   const handleNavButtonClick = (screenId: string) => {
+    if (screenId === 'aws') {
+      if (onSelectPanel) {
+        onSelectPanel('ec2');
+        setIsDrawerOpen(false);
+        return;
+      } else {
+        // Direct navigation to EC2 dashboard
+        navigate('/ec2');
+        return;
+      }
+    }
+    
     if (activeScreen === screenId) {
       setActiveScreen(null);
     } else {
@@ -323,11 +366,13 @@ const NavigationMenu: React.FC = () => {
         icon={Cloud} 
         label="AWS" 
         onClick={() => handleNavButtonClick('aws')}
+        active={activePanel === 'ec2'}
       />
       <NavButton 
         icon={GitBranch} 
         label="GITHUB" 
         onClick={() => handleNavButtonClick('github')}
+        active={activePanel === 'github'}
       />
       <NavButton 
         icon={Upload} 
@@ -358,11 +403,13 @@ const NavigationMenu: React.FC = () => {
         icon={Cloud} 
         label="AWS" 
         onClick={() => handleNavButtonClick('aws')}
+        active={activePanel === 'ec2'}
       />
       <NavButton 
         icon={GitBranch} 
         label="GITHUB" 
         onClick={() => handleNavButtonClick('github')}
+        active={activePanel === 'github'}
       />
       <NavButton 
         icon={Power} 
@@ -454,7 +501,16 @@ const NavigationMenu: React.FC = () => {
                     key={screen.id}
                     className="w-full p-3 border border-[#33FF00]/30 bg-[#111] hover:bg-[#222] text-[#33FF00] font-micro uppercase text-sm transition-colors text-left"
                     onClick={() => {
-                      setActiveScreen(screen.id);
+                      if (screen.id === 'aws') {
+                        setIsDrawerOpen(false);
+                        if (onSelectPanel) {
+                          onSelectPanel('ec2');
+                        } else {
+                          navigate('/ec2');
+                        }
+                      } else {
+                        setActiveScreen(screen.id);
+                      }
                     }}
                   >
                     {screen.title}

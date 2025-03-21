@@ -5,17 +5,41 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import NavigationMenu from '@/components/NavigationMenu';
 import LoadingScreen from '@/components/LoadingScreen';
 import CommandPrompt from '@/components/CommandPrompt';
+import EC2ManagementPanel from '@/components/aws/EC2ManagementPanel';
 
 const Index = () => {
   const isMobile = useIsMobile();
   const [showLoading, setShowLoading] = useState(true);
   const [showCommandPrompt, setShowCommandPrompt] = useState(false);
+  const [activePanel, setActivePanel] = useState<'notifications' | 'ec2' | 'github'>('notifications');
   
   // Auto-hide loading screen after it completes with a reduced delay
   const handleLoadingComplete = () => {
     setTimeout(() => {
       setShowLoading(false);
     }, 200); // Reduced from 500ms to 200ms
+  };
+  
+  const renderActivePanel = () => {
+    if (showCommandPrompt) {
+      return (
+        <CommandPrompt 
+          isOpen={showCommandPrompt} 
+          onClose={() => setShowCommandPrompt(false)} 
+        />
+      );
+    }
+    
+    switch (activePanel) {
+      case 'ec2':
+        return <EC2ManagementPanel onClose={() => setActivePanel('notifications')} />;
+      case 'github':
+        // Will be implemented in Phase 3
+        return <NotificationPanel />;
+      case 'notifications':
+      default:
+        return <NotificationPanel />;
+    }
   };
   
   return (
@@ -43,14 +67,7 @@ const Index = () => {
             </div>
             
             <div className="flex-1 flex flex-col min-h-0">
-              {showCommandPrompt ? (
-                <CommandPrompt 
-                  isOpen={showCommandPrompt} 
-                  onClose={() => setShowCommandPrompt(false)} 
-                />
-              ) : (
-                <NotificationPanel />
-              )}
+              {renderActivePanel()}
             </div>
             
             <div className="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-[#33FF00]/0 via-[#33FF00]/50 to-[#33FF00]/0"></div>
@@ -59,21 +76,32 @@ const Index = () => {
         
         {/* Navigation menu - sticky at bottom */}
         <div className="mt-2 md:mt-4 sticky bottom-0 z-10">
-          <NavigationMenu />
+          <NavigationMenu 
+            onSelectPanel={(panel) => {
+              setActivePanel(panel as 'notifications' | 'ec2' | 'github');
+              setShowCommandPrompt(false);
+            }}
+            activePanel={activePanel}
+          />
         </div>
         
         {/* Terminal footer with command prompt toggle */}
         <div className="bg-[#111] border border-[#33FF00]/30 rounded-sm mt-2 md:mt-4 p-1 md:p-2 flex justify-between items-center">
-          <div className="text-[#33FF00]/70 font-micro text-[8px] md:text-xs tracking-widest">
+          <div className="text-[#33FF00]/70 font-micro text-[8px] md:text-xs tracking-widest mb-1">
             INFRA: READY
           </div>
           <button
-            onClick={() => setShowCommandPrompt(!showCommandPrompt)}
-            className="text-[#33FF00]/70 font-micro text-[8px] md:text-xs tracking-widest hover:text-[#33FF00] transition-colors"
+            onClick={() => {
+              setShowCommandPrompt(!showCommandPrompt);
+              if (showCommandPrompt) {
+                setActivePanel('notifications');
+              }
+            }}
+            className="text-[#33FF00]/70 font-micro text-[8px] md:text-xs tracking-widest hover:text-[#33FF00] transition-colors mb-1"
           >
             {showCommandPrompt ? "CLOSE CMD" : "OPEN CMD"}
           </button>
-          <div className="text-[#33FF00]/70 font-micro text-[8px] md:text-xs tracking-widest">
+          <div className="text-[#33FF00]/70 font-micro text-[8px] md:text-xs tracking-widest mb-1">
             DEVOPS: ACTIVE
           </div>
         </div>
