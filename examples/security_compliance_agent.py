@@ -28,7 +28,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Import the agents module
 try:
-    from agents import Agent, Runner, GuardrailFunctionOutput, InputGuardrail
+    from agents import Agent, Runner, GuardrailFunctionOutput, InputGuardrail, input_guardrail, RunContextWrapper
     # The RunContext might not be available in the installed version
     try:
         from agents.types import RunContext
@@ -397,14 +397,27 @@ async def generate_security_report(
     }
 
 # Define a guardrail for security operations
+class SecurityOperationsOutput(BaseModel):
+    """Output model for security operations check guardrail."""
+    is_unsafe: bool = Field(
+        description="Whether the security operation is unsafe"
+    )
+    reasoning: str = Field(
+        description="Reasoning for the safety determination"
+    )
+
+@input_guardrail
 async def security_operations_guardrail(
-    input_text: str,
-    context: Optional[Any] = None
+    ctx: RunContextWrapper,
+    agent: Agent,
+    input_text: str
 ) -> GuardrailFunctionOutput:
     """
     Guardrail to prevent unsafe security operations.
     
     Args:
+        ctx: Run context
+        agent: The agent being used
         input_text: The user input to check
         
     Returns:
@@ -420,13 +433,24 @@ async def security_operations_guardrail(
     
     for pattern in unsafe_patterns:
         if pattern in input_text.lower():
-            return GuardrailFunctionOutput(
-                allow=False,
-                message=f"Unsafe security operation detected: '{pattern}'. "
+            output_info = SecurityOperationsOutput(
+                is_unsafe=True,
+                reasoning=f"Unsafe security operation detected: '{pattern}'. "
                         f"This could introduce security vulnerabilities."
             )
+            return GuardrailFunctionOutput(
+                tripwire_triggered=True,
+                output_info=output_info
+            )
     
-    return GuardrailFunctionOutput(allow=True)
+    output_info = SecurityOperationsOutput(
+        is_unsafe=False,
+        reasoning="No unsafe security operations detected."
+    )
+    return GuardrailFunctionOutput(
+        tripwire_triggered=False,
+        output_info=output_info
+    )
 
 async def main():
     """Run the security compliance agent example."""
@@ -500,16 +524,16 @@ async def main():
         You are a security compliance orchestrator that helps users manage security and compliance.
         You can delegate tasks to specialized agents for scanning, compliance checking, remediation, and reporting.
         
-        Help users understand their security posture and guide them through the process of identifying,
-        prioritizing, and remediating security issues.
+        Help users understand the security posture of their infrastructure and guide them through the process of
+        identifying, prioritizing, and remediating security issues.
         
         Always follow these principles:
-        1. Security first - never recommend actions that could weaken security
-        2. Risk-based approach - prioritize issues by severity and impact
+        1. Security first - never recommend operations that could weaken security
+        2. Prioritize by risk - focus on critical and high severity findings first
         3. Compliance as a baseline - use compliance frameworks as a minimum standard
-        4. Clear documentation - ensure all findings and remediation steps are well-documented
+        4. Clear reporting - ensure findings and recommendations are clearly communicated
         
-        When a user wants to perform a security audit, help them scan their infrastructure,
+        When a user wants to assess their security posture, help them scan their infrastructure,
         check compliance, create a remediation plan, and generate a comprehensive report.
         """,
         handoffs=[
@@ -527,7 +551,7 @@ async def main():
             },
             {
                 "agent": reporting_agent,
-                "description": "Handles security reporting tasks"
+                "description": "Handles reporting tasks"
             }
         ],
         input_guardrails=[security_guardrail, security_operations_guardrail],
@@ -540,16 +564,15 @@ async def main():
     result = await Runner.run(
         security_compliance_agent,
         """
-        I need to perform a comprehensive security audit of our AWS infrastructure in us-west-2.
+        I need to perform a security audit of our AWS infrastructure in us-west-2.
         
-        First, scan our infrastructure for security issues, focusing on EC2 instances and security groups.
-        Then, check our compliance against the CIS AWS Foundations benchmark.
-        
-        Based on the findings, create a remediation plan prioritizing critical and high severity issues.
-        For automated remediations, execute them if they're safe to do so.
-        
+        First, scan our infrastructure for security issues.
+        Then, check compliance against the CIS AWS Foundations framework.
+        Next, create a remediation plan for any critical or high severity findings.
         Finally, generate a comprehensive security report and create an issue in our
-        example-org/security-reports GitHub repository with the results.
+        example-org/security-reports GitHub repository.
+        
+        Please prioritize findings related to IAM permissions and encryption.
         """,
         context=context
     )

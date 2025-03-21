@@ -26,7 +26,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Import the agents module
 try:
-    from agents import Agent, Runner, GuardrailFunctionOutput, InputGuardrail
+    from agents import Agent, Runner, GuardrailFunctionOutput, InputGuardrail, input_guardrail, RunContextWrapper
     # The RunContext might not be available in the installed version
     try:
         from agents.types import RunContext
@@ -149,14 +149,27 @@ async def execute_deployment(
     }
 
 # Define a guardrail for deployment safety
+class DeploymentSafetyOutput(BaseModel):
+    """Output model for deployment safety check guardrail."""
+    is_unsafe: bool = Field(
+        description="Whether the deployment practice is unsafe"
+    )
+    reasoning: str = Field(
+        description="Reasoning for the safety determination"
+    )
+
+@input_guardrail
 async def deployment_safety_guardrail(
-    input_text: str,
-    context: Optional[Any] = None
+    ctx: RunContextWrapper,
+    agent: Agent,
+    input_text: str
 ) -> GuardrailFunctionOutput:
     """
     Guardrail to prevent unsafe deployment practices.
     
     Args:
+        ctx: Run context
+        agent: The agent being used
         input_text: The user input to check
         
     Returns:
@@ -171,13 +184,24 @@ async def deployment_safety_guardrail(
     
     for pattern in unsafe_patterns:
         if pattern in input_text.lower():
-            return GuardrailFunctionOutput(
-                allow=False,
-                message=f"Unsafe deployment practice detected: '{pattern}'. "
+            output_info = DeploymentSafetyOutput(
+                is_unsafe=True,
+                reasoning=f"Unsafe deployment practice detected: '{pattern}'. "
                         f"This could lead to unstable deployments or security issues."
             )
+            return GuardrailFunctionOutput(
+                tripwire_triggered=True,
+                output_info=output_info
+            )
     
-    return GuardrailFunctionOutput(allow=True)
+    output_info = DeploymentSafetyOutput(
+        is_unsafe=False,
+        reasoning="No unsafe deployment practices detected."
+    )
+    return GuardrailFunctionOutput(
+        tripwire_triggered=False,
+        output_info=output_info
+    )
 
 async def main():
     """Run the CI/CD pipeline management example."""

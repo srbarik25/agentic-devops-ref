@@ -27,7 +27,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Import the agents module
 try:
-    from agents import Agent, Runner, GuardrailFunctionOutput, InputGuardrail
+    from agents import Agent, Runner, GuardrailFunctionOutput, InputGuardrail, input_guardrail, RunContextWrapper
     # The RunContext might not be available in the installed version
     try:
         from agents.types import RunContext
@@ -264,14 +264,27 @@ async def create_recovery_report(
     }
 
 # Define a guardrail for recovery safety
+class RecoverySafetyOutput(BaseModel):
+    """Output model for recovery safety check guardrail."""
+    is_unsafe: bool = Field(
+        description="Whether the recovery operation is unsafe"
+    )
+    reasoning: str = Field(
+        description="Reasoning for the safety determination"
+    )
+
+@input_guardrail
 async def recovery_safety_guardrail(
-    input_text: str,
-    context: Optional[Any] = None
+    ctx: RunContextWrapper,
+    agent: Agent,
+    input_text: str
 ) -> GuardrailFunctionOutput:
     """
     Guardrail to prevent unsafe recovery operations.
     
     Args:
+        ctx: Run context
+        agent: The agent being used
         input_text: The user input to check
         
     Returns:
@@ -286,13 +299,24 @@ async def recovery_safety_guardrail(
     
     for pattern in unsafe_patterns:
         if pattern in input_text.lower():
-            return GuardrailFunctionOutput(
-                allow=False,
-                message=f"Unsafe recovery operation detected: '{pattern}'. "
+            output_info = RecoverySafetyOutput(
+                is_unsafe=True,
+                reasoning=f"Unsafe recovery operation detected: '{pattern}'. "
                         f"This could lead to data loss or service disruption."
             )
+            return GuardrailFunctionOutput(
+                tripwire_triggered=True,
+                output_info=output_info
+            )
     
-    return GuardrailFunctionOutput(allow=True)
+    output_info = RecoverySafetyOutput(
+        is_unsafe=False,
+        reasoning="No unsafe recovery operations detected."
+    )
+    return GuardrailFunctionOutput(
+        tripwire_triggered=False,
+        output_info=output_info
+    )
 
 async def main():
     """Run the disaster recovery agent example."""
