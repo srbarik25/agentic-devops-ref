@@ -23,106 +23,141 @@ Agentic DevOps serves as an intelligent co-pilot for your infrastructure—or ev
 
 Agentic DevOps is designed to transform cloud infrastructure management through autonomous operation and intelligent decision-making. It provides a consistent interface for working with various cloud providers and services while adding a layer of AI-driven automation that can operate independently when needed.
 
-Key benefits include:
+### Key Benefits
 
-- **Autonomous Operation**: Deploy infrastructure and applications with minimal human oversight
-- **Self-Healing Systems**: Automatically detect and remediate issues before they impact users
-- **Continuous Optimization**: Intelligently adjust resources based on actual usage patterns
-- **Reduced Complexity**: Manage multiple cloud services through a single, intelligent interface
-- **Increased Efficiency**: Eliminate repetitive tasks through true autonomous automation
-- **Enhanced Security**: Built-in security guardrails with proactive vulnerability detection
-- **Natural Language Control**: Interact with your infrastructure using plain English
-- **Extensibility**: Easily add support for new services and providers
-- **Comprehensive Documentation**: Detailed guides and examples for all features
+| Benefit | Description |
+|---------|-------------|
+| **Autonomous Operation** | Deploy infrastructure and applications with minimal human oversight |
+| **Self-Healing Systems** | Automatically detect and remediate issues before they impact users |
+| **Continuous Optimization** | Intelligently adjust resources based on actual usage patterns |
+| **Reduced Complexity** | Manage multiple cloud services through a single, intelligent interface |
+| **Increased Efficiency** | Eliminate repetitive tasks through true autonomous automation |
+| **Enhanced Security** | Built-in security guardrails with proactive vulnerability detection |
+| **Natural Language Control** | Interact with your infrastructure using plain English |
+| **Extensibility** | Easily add support for new services and providers |
+| **Comprehensive Documentation** | Detailed guides and examples for all features |
 
 ## Features
 
 ### Core Capabilities
 
-- **Autonomous Infrastructure Management**: AI-driven management of cloud resources
-  - Self-provisioning infrastructure based on application requirements
-  - Automatic scaling based on real-time demand
-  - Intelligent resource optimization for cost efficiency
-  - Anomaly detection and autonomous remediation
-  - Continuous security posture improvement
+#### Autonomous Infrastructure Management
 
-- **AWS Infrastructure Management**: Comprehensive management of AWS services
-  - EC2 instance lifecycle management (create, start, stop, terminate)
-  - S3 bucket operations (create, list, upload, download)
-  - VPC configuration and management
-  - IAM role and policy management
-  - CloudFormation template deployment
-  - Lambda function management
-  - ECS container orchestration
-  - RDS database administration
+| Feature | Description |
+|---------|-------------|
+| Self-provisioning | Infrastructure based on application requirements |
+| Automatic scaling | Based on real-time demand |
+| Intelligent optimization | Resource optimization for cost efficiency |
+| Anomaly detection | And autonomous remediation |
+| Security posture | Continuous security posture improvement |
 
-- **GitHub Integration**: Seamless connection between code and infrastructure
-  - Repository management
-  - Issue and PR tracking
-  - Code deployment pipelines
-  - Webhook configuration
-  - GitHub Actions integration
-  - Repository statistics and analytics
-  - Code scanning and security analysis
+#### AWS Infrastructure Management
 
-- **Autonomous Deployment**: Intelligent application deployment
-  - Zero-touch continuous deployment
-  - Automatic environment configuration
-  - Intelligent rollback on failure detection
-  - Progressive deployment with health monitoring
-  - Traffic shifting based on real-time metrics
-  - Deployment schedule optimization
-  - Cross-environment consistency enforcement
+| Feature | Description |
+|---------|-------------|
+| EC2 | Instance lifecycle management (create, start, stop, terminate) |
+| S3 | Bucket operations (create, list, upload, download) |
+| VPC | Configuration and management |
+| IAM | Role and policy management |
+| CloudFormation | Template deployment |
+| Lambda | Function management |
+| ECS | Container orchestration |
+| RDS | Database administration |
 
-- **Infrastructure as Code**: Deploy and manage resources from code
-  - CloudFormation template generation and deployment
-  - Terraform integration
-  - Custom IaC template support
-  - Version-controlled infrastructure
-  - Drift detection and remediation
+#### GitHub Integration
 
-- **AI-Powered Assistance**: Leverage OpenAI's capabilities
-  - Natural language infrastructure commands
-  - Automated troubleshooting and diagnostics
-  - Intelligent resource optimization recommendations
-  - Security posture analysis
-  - Cost optimization suggestions
+| Feature | Description |
+|---------|-------------|
+| Repository management | Create, clone, and manage repositories |
+| Issue and PR tracking | Track and manage issues and pull requests |
+| Code deployment | Deployment pipelines from GitHub to infrastructure |
+| Webhook configuration | Set up and manage webhooks |
+| GitHub Actions | Integration with GitHub Actions |
+| Repository analytics | Statistics and analytics for repositories |
+| Security analysis | Code scanning and security analysis |
+
+#### Autonomous Deployment
+
+| Feature | Description |
+|---------|-------------|
+| Zero-touch deployment | Continuous deployment with minimal intervention |
+| Environment configuration | Automatic environment configuration |
+| Intelligent rollback | Automatic rollback on failure detection |
+| Progressive deployment | Deployment with health monitoring |
+| Traffic shifting | Based on real-time metrics |
+| Deployment scheduling | Schedule optimization for deployments |
+| Cross-environment consistency | Enforcement of consistency across environments |
+
+#### Infrastructure as Code
+
+| Feature | Description |
+|---------|-------------|
+| CloudFormation | Template generation and deployment |
+| Terraform | Integration with Terraform |
+| Custom IaC | Custom IaC template support |
+| Version control | Version-controlled infrastructure |
+| Drift detection | Detection and remediation of configuration drift |
+
+#### AI-Powered Assistance
+
+| Feature | Description |
+|---------|-------------|
+| Natural language | Infrastructure commands using plain English |
+| Troubleshooting | Automated troubleshooting and diagnostics |
+| Optimization | Intelligent resource optimization recommendations |
+| Security analysis | Security posture analysis |
+| Cost optimization | Suggestions for cost optimization |
 
 ### Advanced Features
 
-- **Multi-Cloud Support**: Consistent interface across providers
-  - AWS (primary support)
-  - Azure (planned)
-  - Google Cloud (planned)
-  - DigitalOcean (planned)
+#### Multi-Cloud Support
 
-- **Security and Compliance**:
-  - Secure credential management with keyring integration
-  - Least privilege access patterns
-  - Compliance checking for industry standards
-  - Security best practice enforcement
-  - Audit logging and reporting
+| Provider | Status |
+|----------|--------|
+| AWS | Primary support |
+| Azure | Planned |
+| Google Cloud | Planned |
+| DigitalOcean | Planned |
 
-- **Observability and Monitoring**:
-  - Resource health monitoring
-  - Performance metrics collection
-  - Cost tracking and optimization
-  - Anomaly detection
-  - Custom alerting rules
+#### Security and Compliance
 
-- **Deployment Automation**:
-  - CI/CD pipeline integration
-  - Blue/green deployment strategies
-  - Canary releases
-  - Rollback capabilities
-  - Deployment verification
+| Feature | Description |
+|---------|-------------|
+| Credential management | Secure credential management with keyring integration |
+| Least privilege | Least privilege access patterns |
+| Compliance checking | For industry standards |
+| Best practices | Security best practice enforcement |
+| Audit logging | Logging and reporting |
 
-- **Disaster Recovery**:
-  - Automated backup management
-  - Cross-region replication
-  - Recovery time objective (RTO) optimization
-  - Disaster recovery testing
-  - Failover automation
+#### Observability and Monitoring
+
+| Feature | Description |
+|---------|-------------|
+| Health monitoring | Resource health monitoring |
+| Performance metrics | Collection of performance metrics |
+| Cost tracking | Cost tracking and optimization |
+| Anomaly detection | Detection of anomalies |
+| Custom alerting | Custom alerting rules |
+
+#### Deployment Automation
+
+| Feature | Description |
+|---------|-------------|
+| CI/CD integration | Integration with CI/CD pipelines |
+| Blue/green deployment | Support for blue/green deployment strategies |
+| Canary releases | Support for canary releases |
+| Rollback | Rollback capabilities |
+| Verification | Deployment verification |
+
+#### Disaster Recovery
+
+| Feature | Description |
+|---------|-------------|
+| Backup management | Automated backup management |
+| Cross-region replication | Replication across regions |
+| RTO optimization | Recovery time objective optimization |
+| DR testing | Disaster recovery testing |
+| Failover automation | Automated failover |
 
 ## Getting Started
 
@@ -332,12 +367,14 @@ Agentic DevOps leverages OpenAI's Agents SDK to provide powerful AI-driven infra
 
 ### Key Benefits of OpenAI Agents Integration
 
-- **Natural Language Infrastructure Control**: Manage your infrastructure using plain English commands
-- **Context-Aware Operations**: The agent maintains context across interactions for more coherent workflows
-- **Intelligent Automation**: Automate complex tasks with AI-driven decision making
-- **Adaptive Learning**: Improve over time based on your specific infrastructure patterns
-- **Multi-Step Reasoning**: Break down complex operations into logical steps
-- **Guardrails and Safety**: Built-in safeguards to prevent destructive operations
+| Benefit | Description |
+|---------|-------------|
+| **Natural Language Control** | Manage infrastructure using plain English commands |
+| **Context-Aware Operations** | Maintains context across interactions for coherent workflows |
+| **Intelligent Automation** | Automate complex tasks with AI-driven decision making |
+| **Adaptive Learning** | Improve over time based on your specific infrastructure patterns |
+| **Multi-Step Reasoning** | Break down complex operations into logical steps |
+| **Guardrails and Safety** | Built-in safeguards to prevent destructive operations |
 
 ### Agent Architecture
 
@@ -552,11 +589,13 @@ for step in trace.steps:
 
 Agentic DevOps provides multiple secure options for credential management:
 
-1. **Environment Variables**: Traditional approach using environment variables
-2. **AWS Profiles**: Leverage AWS CLI profiles for credential management
-3. **Keyring Integration**: Store credentials securely in your system's keyring
-4. **IAM Roles**: Use IAM roles for EC2 instances or Lambda functions
-5. **Secrets Manager**: Retrieve credentials from AWS Secrets Manager or similar services
+| Method | Description |
+|--------|-------------|
+| **Environment Variables** | Traditional approach using environment variables |
+| **AWS Profiles** | Leverage AWS CLI profiles for credential management |
+| **Keyring Integration** | Store credentials securely in your system's keyring |
+| **IAM Roles** | Use IAM roles for EC2 instances or Lambda functions |
+| **Secrets Manager** | Retrieve credentials from AWS Secrets Manager or similar services |
 
 Example keyring setup:
 
@@ -611,10 +650,12 @@ except AWSServiceError as e:
 
 Agentic DevOps is designed to be easily extended with new services and providers:
 
-1. **Service Modules**: Add new AWS services by creating new service modules
-2. **Cloud Providers**: Implement new cloud providers by following the provider interface
-3. **Custom Tools**: Create custom tools for specific workflows
-4. **Plugins**: Develop plugins to extend functionality
+| Extension Point | Description |
+|-----------------|-------------|
+| **Service Modules** | Add new AWS services by creating new service modules |
+| **Cloud Providers** | Implement new cloud providers by following the provider interface |
+| **Custom Tools** | Create custom tools for specific workflows |
+| **Plugins** | Develop plugins to extend functionality |
 
 Example of creating a custom service:
 
