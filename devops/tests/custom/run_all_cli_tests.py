@@ -9,14 +9,14 @@ import os
 # Add the parent directory to the path so we can import our modules
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../..'))
 
-# Import test modules
-from tests.custom.test_cli_format import TestCLIFormatOutput as SimpleFormatTests
-from tests.custom.test_cli import (
+# Import test modules directly from the current directory
+from test_cli_format import TestCLIFormatOutput as SimpleFormatTests
+from test_cli import (
     TestCLIFormatOutput, 
     TestCLIEC2Commands, 
     TestCLIGitHubCommands
 )
-from tests.custom.test_error_handling import TestCLIErrorHandling
+from test_error_handling import TestErrorHandling
 
 def run_all_tests():
     """Run all CLI tests."""
@@ -33,7 +33,7 @@ def run_all_tests():
     test_suite.addTest(test_loader.loadTestsFromTestCase(TestCLIGitHubCommands))
     
     # Add tests from test_error_handling.py
-    test_suite.addTest(test_loader.loadTestsFromTestCase(TestCLIErrorHandling))
+    test_suite.addTest(test_loader.loadTestsFromTestCase(TestErrorHandling))
     
     # Run the tests
     test_runner = unittest.TextTestRunner(verbosity=2)
