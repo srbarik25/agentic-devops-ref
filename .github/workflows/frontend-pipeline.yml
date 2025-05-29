@@ -1,0 +1,401 @@
+#frontend deployment pipeline
+name: deploy-AgenticAI-frontend #change
+ 
+env:
+  APP_NAME: agentic-devops
+  ENVIRONMENT: ${{ github.event.inputs.environment }} # set based on the branch name
+  REACT_DOCKER_FILE_PATH: frontend/Dockerfile
+  CFN_FRONTEND_FILE_PATH: template/vrt-cfn-frontend.yaml
+  CFN_PARAM_FRONTEND_FILE_PATH: -vrt-frontend-stack.params
+  ECR_REPO_NAME_SUFFIX: react-frontend
+  RC: frontend-RC1
+ 
+defaults:
+  run:
+    working-directory: "./ui"
+ 
+on:
+  push:
+    branches:
+      - "agentic-devops-ref"
+      - "dev"
+    #     # - 'test'
+    paths:
+      - "ui/**"
+      - ".github/workflows/deploy-frontend.yaml" ##2
+      - "template/vrt-cfn-frontend.yaml"
+      # - "template/dev-vrt-backend-stack.params"
+ 
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to run task against"
+        required: true
+        type: choice
+        options:
+          - dev
+          - test
+          - sbx
+      ReactImageTag:
+        description: "React ECR Image Tag / Commit ID"
+        default: ""
+      ContinueOnError:
+        description: "Continue on Sonarqube and Snyk scan failures?"
+        required: false
+        default: false
+        type: boolean
+ 
+permissions:
+  id-token: write
+  contents: write # This is required for actions/checkout@v3
+ 
+jobs:
+  setup-env:
+    name: Setup Environment
+    runs-on: ubuntu-latest
+    outputs:
+      ENVIRONMENT: ${{ steps.variables.outputs.ENVIRONMENT }}
+      CLUSTER_ENVIRONMENT: ${{ steps.variables.outputs.CLUSTER_ENVIRONMENT }}
+      SHORT_COMMIT_ID: ${{ steps.check-image.outputs.SHORT_COMMIT_ID }}
+      BUILD_REACT_FRONTEND: ${{ steps.check-image.outputs.BUILD_REACT_FRONTEND }}
+      # ECR_REGISTRY: ${{ steps.check-image.outputs.ECR_REGISTRY }} # will be skipped as it contains secret values
+      ECR_REPOSITORY: ${{ steps.check-image.outputs.ECR_REPOSITORY }}
+      CONTINUE_ON_ERROR: ${{ steps.continue_on_error.outputs.CONTINUE_ON_ERROR }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set ContinueOnError
+        id: continue_on_error
+        run: |
+          if [ "x${{ github.event.inputs.ContinueOnError }}x" == "xx" ]; then
+            CONTINUE_ON_ERROR=false
+          else
+            CONTINUE_ON_ERROR=${{ github.event.inputs.ContinueOnError }}
+          fi
+          echo "CONTINUE_ON_ERROR=$CONTINUE_ON_ERROR" >> $GITHUB_ENV
+          echo "CONTINUE_ON_ERROR=$CONTINUE_ON_ERROR" >> $GITHUB_OUTPUT
+      - name: Setup Environment Variables
+        id: variables
+        run: |
+          # ENVIRONMENT="dummy" # willbe replaced below
+          # set the application name
+          echo "APP_NAME=${{ env.APP_NAME }}" >> $GITHUB_ENV 
+          # Set Environment by Branch Name (sbx is all outside of protected branches)
+          # This also sets the role to assume from secrets based on branch
+          echo "CONTINUE_ON_ERROR=${{ false }}" >> $GITHUB_ENV # break the build if vulnerabilities found
+          if [ ${{ github.ref_name }} == "main" ]; then
+            # echo "ENVIRONMENT=test" >> $GITHUB_ENV
+            ENVIRONMENT=test
+            CLUSTER_ENVIRONMENT=test
+          elif [ ${{ github.ref_name }} == "dev" ]; then
+            # echo "ENVIRONMENT=dev" >> $GITHUB_ENV
+            ENVIRONMENT=dev
+            CLUSTER_ENVIRONMENT=dev
+          elif [ ${{ github.ref_name }} == "agentic-devops-ref" ]; then
+            # echo "ENVIRONMENT=dev" >> $GITHUB_ENV
+            ENVIRONMENT=dev
+            CLUSTER_ENVIRONMENT=dev
+          else
+            # lowercase=`echo ${{ github.ref_name }} | tr '[:upper:]' '[:lower:]'`  # conver to lowercase
+            # echo "ENVIRONMENT=$lowercase" >> $GITHUB_ENV
+            ENVIRONMENT=sbx
+            CLUSTER_ENVIRONMENT=dev          
+          fi
+          echo "ENVIRONMENT=$ENVIRONMENT" >> $GITHUB_OUTPUT
+          echo "ENVIRONMENT=$ENVIRONMENT" >> $GITHUB_ENV
+          echo "Running workflow on Environment: $ENVIRONMENT"
+          echo "CLUSTER_ENVIRONMENT=$CLUSTER_ENVIRONMENT" >> $GITHUB_OUTPUT
+          echo "CLUSTER_ENVIRONMENT=$CLUSTER_ENVIRONMENT" >> $GITHUB_ENV
+          echo "Running workflow on ECS Cluster: $CLUSTER_ENVIRONMENT"
+ 
+      # configure credentials with OIDC
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/${{ secrets.OIDC_ROLE }}
+          role-session-name: ${{ github.ref_name }}-${{ env.APP_NAME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+ 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+ 
+      - name: Create ECR repo if missing
+        uses: byu-oit/github-action-create-ecr-repo-if-missing@v2
+        with:
+          DOCKER_REPO_NAME: ${{ env.ENVIRONMENT }}-${{ env.APP_NAME }}-${{ env.ECR_REPO_NAME_SUFFIX }}
+ 
+      - name: Check if image is available on ECR repository
+        id: check-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ env.ENVIRONMENT }}-${{ env.APP_NAME }}-${{ env.ECR_REPO_NAME_SUFFIX }}
+          IMAGE_TAG: ${{ github.event.inputs.ReactImageTag }}
+        run: |
+          BUILD_REACT_FRONTEND=false
+          # set short commit ID
+          LAST_UPDATED_COMMIT_ID=$(git log -n 1 --pretty=format:'%h')
+          if [ -z "$IMAGE_TAG" ]; then
+            echo "IMAGE_TAG not provided by user"
+            BUILD_REACT_FRONTEND=true
+            SHORT_COMMIT_ID=$LAST_UPDATED_COMMIT_ID
+          else
+            # Check if the specified image exists in the ECR repository
+            IMAGE_FOUND=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --image-ids imageTag=$IMAGE_TAG --query 'images[]' --output text)
+            if [ -z "$IMAGE_FOUND" ]; then
+              echo "Image not found in ECR repository"
+              BUILD_REACT_FRONTEND=true
+              SHORT_COMMIT_ID=$LAST_UPDATED_COMMIT_ID
+            else
+              echo "Image found in ECR repository"
+              BUILD_REACT_FRONTEND=false
+              SHORT_COMMIT_ID=$IMAGE_TAG
+            fi
+          fi
+          echo "SHORT_COMMIT_ID=$SHORT_COMMIT_ID" >> $GITHUB_OUTPUT
+          echo "BUILD_REACT_FRONTEND=$BUILD_REACT_FRONTEND" >> $GITHUB_OUTPUT
+          echo "BUILD_REACT_FRONTEND=$BUILD_REACT_FRONTEND" >> $GITHUB_ENV
+          echo "ECR_REPOSITORY=$ECR_REPOSITORY" >> $GITHUB_OUTPUT
+  # sonarqube:
+  #   name: sonarqube code check
+  #   runs-on: bolt-ubuntu
+  #   defaults:
+  #     run:
+  #       working-directory: "./frontend"
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+  #     - uses: pfizer-github-automation/sonar-scan-action@e0796249d0a107867fb6adff9ed6095e50bceb85
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  #         SONAR_ROOT_CERT: ${{ secrets.SONAR_ROOT_CERT }}
+ 
+  #     - name: Set ContinueOnError
+  #       run: |
+  #         if [ "x${{ github.event.inputs.ContinueOnError }}x" == "xx" ]; then
+  #           CONTINUE_ON_ERROR=true
+  #         else
+  #           CONTINUE_ON_ERROR=${{ github.event.inputs.ContinueOnError }}
+  #         fi
+  #         echo "CONTINUE_ON_ERROR=$CONTINUE_ON_ERROR" >> $GITHUB_ENV
+  #     # If you wish to fail your job when the Quality Gate is red, uncomment the
+  #     # following lines. This would typically be used to fail a deployment.
+  #     # We do not recommend to use this in a pull request. Prefer using pull request
+  #     # decoration instead.
+  #     - uses: sonarsource/sonarqube-quality-gate-action@master
+  #       if: ${{ env.CONTINUE_ON_ERROR == 'false' }}
+  #       timeout-minutes: 5
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+ 
+  build-image:
+    name: Build, Scan and Push the image to AWS ECR
+    needs: [
+        setup-env,
+        # snyk-scan-cloudformation-template,
+        # snyk-scan-frontend-package-files,
+        # sonarqube,
+      ]
+    # needs: [setup-env]
+    if: needs.setup-env.outputs.BUILD_REACT_FRONTEND == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "./ui"
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+ 
+      # configure credentials with OIDC
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     role-to-assume: arn:aws:iam::${{ secrets.IAS_ECR_AWS_ACCOUNT }}:role/${{ secrets.OIDC_ROLE_IAS_ECR_READ_ACCESS  }}
+      #     role-session-name: aws-cred-login-session
+      #     aws-region: ${{ secrets.AWS_REGION }}
+ 
+      # - name: Login to Amazon ECR
+      #   id: login-base-ecr
+      #   uses: aws-actions/amazon-ecr-login@v1
+ 
+      #   # Build image
+      # - name: Pull base image
+      #   id: pull-base-image
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.login-base-ecr.outputs.registry }}
+      #     IMAGE_TAG: latest
+      #   run: |
+      #     BASE_IMAGE=${{ secrets.IAS_ECR_AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/core-vsl-node:18.20.2
+      #     docker pull $BASE_IMAGE
+      #     BASE_IMAGE2=${{ secrets.IAS_ECR_AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/core-vsl-nginx:1.24.0-alpine3.18
+      #     docker pull $BASE_IMAGE2
+ 
+      # configure credentials with OIDC
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/${{ secrets.OIDC_ROLE }}
+          role-session-name: ${{ github.ref_name }}-${{ env.APP_NAME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      # Build image
+      - name: Build React Frontend Image
+        id: build-docker-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ needs.setup-env.outputs.ENVIRONMENT }}-${{ env.APP_NAME }}-${{ env.ECR_REPO_NAME_SUFFIX }}
+          IMAGE_TAG: ${{ needs.setup-env.outputs.SHORT_COMMIT_ID }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          REACT_FRONTEND_IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "REACT_FRONTEND_IMAGE_URI=$REACT_FRONTEND_IMAGE_URI" >> $GITHUB_ENV
+ 
+      - name: Push React Frontend Image to ECR
+        id: push-react_frontend-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ needs.setup-env.outputs.ENVIRONMENT }}-${{ env.APP_NAME }}-${{ env.ECR_REPO_NAME_SUFFIX }}
+          IMAGE_TAG: ${{ needs.setup-env.outputs.SHORT_COMMIT_ID }}
+        run: |
+          docker push ${{ env.REACT_FRONTEND_IMAGE_URI }}
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+  Deploy-Stack:
+    name: Deploy/Update Stack
+    needs: [setup-env, build-image]
+    if: |
+      always() && 
+      (needs.build-image.result == 'success' || needs.build-image.result == 'skipped') &&
+      (needs.setup-env.result == 'success')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "./ui"
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+ 
+      #     # configure credentials with OIDC
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/${{ secrets.OIDC_ROLE }}
+          role-session-name: ${{ github.ref_name }}-${{ env.APP_NAME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+ 
+      # # set env variable from .params file
+      # - name: Setup Env-Vars from Params file
+      #   working-directory: "./template"
+      #   run: |
+      #     ls
+      #     pwd
+      #     # set stack config file
+      #     echo template/${{ needs.setup-env.outputs.ENVIRONMENT }}-vrt-frontend-stack.params
+      #     if [ -f ${{ needs.setup-env.outputs.ENVIRONMENT }}-vrt-frontend-stack.params ]; then
+      #       STACK_CONFIG=`cat ${{ needs.setup-env.outputs.ENVIRONMENT }}-vrt-frontend-stack.params | tr '\n' ',' `
+      #       echo "STACK_CONFIG=$STACK_CONFIG" >> $GITHUB_ENV
+      #     else
+      #     echo "falling back to default dev${{ env.CFN_PARAM_FRONTEND_FILE_PATH }}"
+      #       STACK_CONFIG=`cat dev${{ env.CFN_PARAM_FRONTEND_FILE_PATH }} | tr '\n' ',' `
+      #       echo "STACK_CONFIG=$STACK_CONFIG" >> $GITHUB_ENV
+      #     fi
+      #     # Set a default environment if it is not "dev", "test", or "prod"
+      #     - name: Set default environment
+      #       if: ${{ !contains('["dev", "test", "prod"]', needs.setup-env.outputs.ENVIRONMENT) }}
+      #       run: echo "DEFAULT_ENVIRONMENT=dev" >> $GITHUB_ENV
+ 
+      #     # reverse of previous step just to set the default env
+      #     - name: Set default environment
+      #       if: ${{ contains('["dev", "test", "prod"]', needs.setup-env.outputs.ENVIRONMENT) }}
+      #       run: echo "DEFAULT_ENVIRONMENT=${{ needs.setup-env.outputs.ENVIRONMENT }}" >> $GITHUB_ENV
+ 
+      # some issue while fetching the ECR repo name - hence redundany
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+ 
+      - name: Check if image is available on ECR repository
+        id: check-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ needs.setup-env.outputs.ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ needs.setup-env.outputs.SHORT_COMMIT_ID }}
+          DEFAULT_ENVIRONMENT: ${{ env.DEFAULT_ENVIRONMENT}}
+          # STACK_CONFIG: ${{ env.STACK_CONFIG}}
+        run: |
+          DEPLOY_STACK=false
+          # Check if the specified image exists in the ECR repository
+          IMAGE_FOUND=$(aws ecr describe-images --repository-name $ECR_REPOSITORY --image-ids imageTag=$IMAGE_TAG --query 'images[]' --output text)
+          if [ -z "$IMAGE_FOUND" ]; then
+            echo "Image not found in ECR repository"
+            DEPLOY_STACK=false
+          else
+            echo "Image found in ECR repository"
+            DEPLOY_STACK=true
+          fi
+          echo "DEPLOY_STACK=$DEPLOY_STACK" >> $GITHUB_ENV
+      # # Run CFN Deploy On Our Stack
+      # - name: Deploy to AWS with CloudFormation
+      #   id: deployStack
+      #   env:
+      #     DEPLOY_STACK: ${{ env.DEPLOY_STACK }}
+      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     ECR_REPOSITORY: ${{ needs.setup-env.outputs.ECR_REPOSITORY }}
+      #     IMAGE_TAG: ${{ needs.setup-env.outputs.SHORT_COMMIT_ID }}
+      #     DEFAULT_ENVIRONMENT: ${{ env.DEFAULT_ENVIRONMENT}}
+      #     STACK_CONFIG: ${{ env.STACK_CONFIG}}
+      #   if: ${{ env.DEPLOY_STACK }}
+      #   uses: aws-actions/aws-cloudformation-github-deploy@v1
+      #   with:
+      #     name: ${{ needs.setup-env.outputs.ENVIRONMENT }}-${{ env.APP_NAME }}-Frontend
+      #     tags: '[
+      #       { "Key": "github-repo", "Value": "${{ GITHUB.REPOSITORY }}" },
+      #       { "Key": "github-branch", "Value": "${{ GITHUB.REF_NAME }}" }]'
+      #     template: ${{ env.CFN_FRONTEND_FILE_PATH }}
+      #     no-fail-on-empty-changeset: "1"
+      #     capabilities: CAPABILITY_NAMED_IAM, CAPABILITY_AUTO_EXPAND
+      #     parameter-overrides: >-
+      #       ${{env.STACK_CONFIG}},
+      #       ImageUri=                     ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }},
+      #       Name=                         ${{ env.APP_NAME }},
+      #       Env=                          ${{ needs.setup-env.outputs.ENVIRONMENT }}
+      # - name: Create github tag for test env
+      #   id: tagTest
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     ECR_REPOSITORY: ${{ needs.setup-env.outputs.ECR_REPOSITORY }}
+      #     IMAGE_TAG: ${{ needs.setup-env.outputs.SHORT_COMMIT_ID }}
+      #   if: ${{ needs.setup-env.outputs.ENVIRONMENT == 'test' }}
+      #   run: |
+      #     gitTag=`git tag -l | sort -V | grep frontend-RC | tail -n 1`
+      #     echo "Latest git tag is $gitTag"
+      #     echo $gitTag
+      #     if [ x"$gitTag" == x ]; then
+      #       gitTag=frontend-RC1
+      #     else
+      #       version=${gitTag#frontend-RC}
+      #       gitTag=frontend-RC$((version+1))
+      #     fi
+      #     echo "New GitHub and image tag: $gitTag"
+      #     # define IMAGE_URI
+      #     IMAGE_URI=${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}
+      #     echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
+      #     echo "IMAGE_URI: $IMAGE_URI"
+      #     echo "IMAGE_TAG: $IMAGE_TAG"
+      #     # tag and push docker image
+      #     docker pull $IMAGE_URI:$IMAGE_TAG
+      #     docker tag $IMAGE_URI:$IMAGE_TAG $IMAGE_URI:$gitTag
+      #     docker push $IMAGE_URI:$gitTag
+      #     # create and push github tag
+      #     git tag $gitTag
+      #     git push origin $gitTag
